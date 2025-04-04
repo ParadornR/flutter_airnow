@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/modules/home/home_page.dart';
+import 'package:flutter_airnow/app/modules/login/login_page.dart';
+import 'package:flutter_airnow/app/modules/registor/register_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,11 +15,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: HomePage(),
+    return MaterialApp(theme: _buildTheme(Brightness.light), home: LoginPage());
+  }
+
+  ThemeData _buildTheme(brightness) {
+    var baseTheme = ThemeData(brightness: brightness);
+
+    return baseTheme.copyWith(
+      textTheme: GoogleFonts.promptTextTheme(baseTheme.textTheme),
     );
   }
 }
