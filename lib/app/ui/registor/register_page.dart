@@ -17,8 +17,20 @@ class _RegisterPageState extends State<RegisterPage> {
       child: GestureDetector(
         onTap: FocusScope.of(context).unfocus,
         child: Scaffold(
-          body: Padding(
+          body: Container(
             padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF3B78B3),
+                  Color(0xFFA3E4FA),
+                  Color(0xFFD1F8EF),
+                  Colors.white,
+                ],
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft,
+              ),
+            ),
             child: Column(
               children: [
                 Spacer(),
