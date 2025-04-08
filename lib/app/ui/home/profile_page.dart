@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/UI/loading/loading_page.dart';
+import 'package:flutter_airnow/app/UI/login/login_page.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -24,7 +24,7 @@ class _HomePageState extends State<ProfilePage> {
     await prefs.remove('uid');
     log('isLogin:${prefs.getBool('isLogin')}');
     log('uid:${prefs.getString('uid')}');
-    Get.off(() => LoadingPage());
+    Get.off(() => LoginPage());
 
     // Navigator.pushReplacement(
     //   context,
