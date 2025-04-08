@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       onPressed: () {
                         log('Sign up');
-                        Get.to(() => const RegisterPage());
+                        Get.to(() => RegisterPage());
                       },
                       child: CustomText(
                         text: "Sign up",

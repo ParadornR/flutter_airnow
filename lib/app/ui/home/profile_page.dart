@@ -1,11 +1,9 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/UI/loading/loading_page.dart';
-import 'package:flutter_airnow/app/UI/login/login_page.dart';
+import 'package:flutter_airnow/app/ui/home/profile_page_controller.dart';
+import 'package:flutter_airnow/app/ui/profile/myprofile_page.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,23 +13,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<ProfilePage> {
-  Future<void> logOut() async {
-    // clear data and jump to login Screen
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    log('${prefs.getBool('isLogin')}');
-    log('${prefs.getString('uid')}');
-    await prefs.remove('isLogin');
-    await prefs.remove('uid');
-    log('isLogin:${prefs.getBool('isLogin')}');
-    log('uid:${prefs.getString('uid')}');
-    Get.off(() => LoginPage());
-
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (_) => LoadingPage()),
-    // );
-  }
-
+  final profilePageController = Get.put(ProfilePageController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,6 +39,7 @@ class _HomePageState extends State<ProfilePage> {
                 InkWell(
                   onTap: () {
                     log("My Profile");
+                    Get.to(() => MyprofilePage());
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16.0),
@@ -89,7 +72,7 @@ class _HomePageState extends State<ProfilePage> {
                 SizedBox(height: 2),
                 InkWell(
                   onTap: () {
-                    log("Log out");
+                    log("Settings");
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16.0),
@@ -119,7 +102,7 @@ class _HomePageState extends State<ProfilePage> {
                 InkWell(
                   onTap: () {
                     log("Log out");
-                    logOut();
+                    profilePageController.logOut();
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16.0),
