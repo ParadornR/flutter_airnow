@@ -1,9 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/ui/home/home_page.dart';
-import 'package:flutter_airnow/app/ui/home/profile_page.dart';
+import 'package:flutter_airnow/app/ui/home/home_main_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
+import 'package:get/get.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({super.key});
@@ -13,26 +12,22 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
-  int _selectedIndex = 0;
+  final homeMainController = Get.put(HomeMainController());
 
-  final List<Widget> _widgetOptions = const [HomePage(), ProfilePage()];
-  final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: PageView(
-          controller: _pageController,
+          controller: homeMainController.pageController.value,
           onPageChanged: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
+            homeMainController.selectedIndex.value = index;
           },
-          children: _widgetOptions,
+          children: homeMainController.widgetOptions,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async {
             log("floatingActionButton: add()");
           },
           tooltip: 'Increment',
@@ -42,22 +37,15 @@ class _HomeMainState extends State<HomeMain> {
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: IconButton(
+              Obx(
+                () => IconButton(
                   onPressed: () {
-                    _selectedIndex = 0;
-                    log('Home');
-                    setState(() {});
-                    _pageController.animateToPage(
-                      _selectedIndex,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.ease,
-                    );
+                    homeMainController.changePage(0);
                   },
                   icon:
-                      _selectedIndex == 0
+                      homeMainController.selectedIndex.value == 0
                           ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -67,30 +55,27 @@ class _HomeMainState extends State<HomeMain> {
                               ),
                               SizedBox(width: 4),
                               CustomText(
-                                text: 'Home',
+                                text: "Home",
                                 size: 14,
                                 color: Colors.white,
                               ),
                             ],
                           )
-                          : Icon(Icons.home, color: Colors.white),
+                          : Center(
+                            child: Icon(Icons.home, color: Colors.white),
+                          ),
                 ),
               ),
-              Expanded(
-                child: IconButton(
+              SizedBox(width: MediaQuery.of(context).size.width * 0.3),
+              Obx(
+                () => IconButton(
                   onPressed: () {
-                    _selectedIndex = 1;
-                    log('Profile');
-                    setState(() {});
-                    _pageController.animateToPage(
-                      _selectedIndex,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.ease,
-                    );
+                    homeMainController.changePage(1);
                   },
                   icon:
-                      _selectedIndex == 1
+                      homeMainController.selectedIndex.value == 1
                           ? Row(
+                            mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomText(
@@ -105,7 +90,9 @@ class _HomeMainState extends State<HomeMain> {
                               ),
                             ],
                           )
-                          : Icon(Icons.person, color: Colors.white),
+                          : Center(
+                            child: Icon(Icons.person, color: Colors.white),
+                          ),
                 ),
               ),
             ],
