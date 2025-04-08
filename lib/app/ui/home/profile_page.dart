@@ -1,7 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_airnow/app/UI/loading/loading_page.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -11,6 +15,23 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<ProfilePage> {
+  Future<void> logOut() async {
+    // clear data and jump to login Screen
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    log('${prefs.getBool('isLogin')}');
+    log('${prefs.getString('uid')}');
+    await prefs.remove('isLogin');
+    await prefs.remove('uid');
+    log('isLogin:${prefs.getBool('isLogin')}');
+    log('uid:${prefs.getString('uid')}');
+    Get.off(() => LoadingPage());
+
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (_) => LoadingPage()),
+    // );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -98,6 +119,7 @@ class _HomePageState extends State<ProfilePage> {
                 InkWell(
                   onTap: () {
                     log("Log out");
+                    logOut();
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16.0),
