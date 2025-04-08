@@ -149,7 +149,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextButton(
                         onPressed: () {
                           log('Sign in');
-                          Navigator.pop(context);
+                          Get.back();
                         },
                         child: CustomText(
                           text: "Sign in",

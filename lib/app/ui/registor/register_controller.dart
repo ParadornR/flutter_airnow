@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/ui/loading/loading_page.dart';
+import 'package:flutter_airnow/app/ui/login/login_page.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
@@ -37,7 +37,7 @@ class RegisterController extends GetxController {
             'created_at': DateTime.now(),
           });
           Get.snackbar('Succeed', "สมัครสมาชิกสำเร็จ!");
-          Get.to(LoadingPage()); // กลับไปหน้าก่อนหน้า (Login)
+          Get.off(LoginPage()); // กลับไปหน้าก่อนหน้า (Login)
         } catch (e) {
           Get.snackbar('Error', "เกิดข้อผิดพลาด: $e");
         }
