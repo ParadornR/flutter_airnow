@@ -1,6 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_airnow/app/UI/registor/register_page.dart';
+import 'package:flutter_airnow/app/ui/login/login_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,20 +56,44 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 8),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'EMAIL',
-                    border: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(),
+                Obx(
+                  () => TextField(
+                    controller: loginController.emailController.value,
+                    decoration: InputDecoration(
+                      labelText: 'EMAIL',
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(),
+                    ),
                   ),
                 ),
                 SizedBox(height: 16),
                 TextField(
+                  controller: loginController.passwordController.value,
                   decoration: InputDecoration(
                     labelText: 'PASSWORD',
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(),
                   ),
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        log("loginController.signInWithEmailAndPass()");
+                        loginController.signInWithEmailAndPass();
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("SIGN UP"),
+                          SizedBox(width: 8),
+                          Icon(Icons.arrow_forward),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
                 Spacer(),
                 Row(
@@ -79,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       onPressed: () {
                         log('Sign up');
+                        Get.to(() => const RegisterPage());
                       },
                       child: CustomText(
                         text: "Sign up",
