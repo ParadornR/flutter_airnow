@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_airnow/app/data/providers/user_provider.dart';
 import 'package:flutter_airnow/app/ui/home/profile_page_controller.dart';
 import 'package:flutter_airnow/app/ui/profile/myprofile_page.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
@@ -14,6 +15,8 @@ class ProfilePage extends StatefulWidget {
 
 class _HomePageState extends State<ProfilePage> {
   final profilePageController = Get.put(ProfilePageController());
+  final userProvider = Get.find<UserProvider>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,9 +31,9 @@ class _HomePageState extends State<ProfilePage> {
                 SizedBox(height: 40),
                 CircleAvatar(radius: 48, child: Icon(Icons.person, size: 32)),
                 SizedBox(height: 8),
-                CustomText(text: 'Full Name', size: 18),
+                CustomText(text: userProvider.user.value!.name, size: 18),
                 CustomText(
-                  text: 'Test@gmail.com',
+                  text: userProvider.user.value!.email,
                   size: 16,
                   weight: FontWeight.w300,
                   color: Colors.grey.shade500,

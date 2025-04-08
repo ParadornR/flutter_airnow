@@ -14,6 +14,6 @@ class ProfilePageController extends GetxController {
     await prefs.remove('uid');
     log('isLogin:${prefs.getBool('isLogin')}');
     log('uid:${prefs.getString('uid')}');
-    Get.off(() => LoginPage());
+    Get.offAll(() => LoginPage());
   }
 }

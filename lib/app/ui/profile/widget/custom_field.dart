@@ -56,6 +56,7 @@ class CustomField extends StatelessWidget {
           ),
           child: TextField(
             controller: controller,
+            readOnly: false,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),

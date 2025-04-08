@@ -6,6 +6,7 @@ import 'package:flutter_airnow/app/ui/home/profile_page.dart';
 import 'package:get/get.dart';
 
 class HomeMainController extends GetxController {
+  
   var selectedIndex = 0.obs;
   final List<Widget> widgetOptions = const [HomePage(), ProfilePage()];
   var pageController = PageController().obs;

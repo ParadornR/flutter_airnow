@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_airnow/app/data/providers/user_provider.dart';
 import 'package:flutter_airnow/app/ui/home/home_main_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({super.key});
@@ -13,6 +15,7 @@ class HomeMain extends StatefulWidget {
 
 class _HomeMainState extends State<HomeMain> {
   final homeMainController = Get.put(HomeMainController());
+  final userProvider = Get.put(UserProvider());
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,10 @@ class _HomeMainState extends State<HomeMain> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             log("floatingActionButton: add()");
+            final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+            log('${prefs.getBool('isLogin')}');
+            log('${prefs.getString('uid')}');
           },
           tooltip: 'Increment',
           shape: const CircleBorder(),

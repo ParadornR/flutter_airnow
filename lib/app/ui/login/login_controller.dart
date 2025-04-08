@@ -23,7 +23,7 @@ class LoginController extends GetxController {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLogin', true);
       await prefs.setString('uid', uid);
-      Get.off(HomeMain());
+      Get.off(() => HomeMain());
       onClose();
     } catch (e) {
       Get.snackbar('Error', e.toString());

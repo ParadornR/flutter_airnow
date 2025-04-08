@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoadingController extends GetxController {
   var isLogin = false.obs;
 
+
   @override
   void onInit() {
     checkLogin();
@@ -17,6 +18,4 @@ class LoadingController extends GetxController {
     log('uid: ${prefs.getString('uid')}');
     isLogin.value = prefs.getBool('isLogin') ?? false;
   }
-
-  
 }
