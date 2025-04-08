@@ -1,9 +1,8 @@
 import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_airnow/app/ui/registor/register_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
+import 'package:get/get.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -13,55 +12,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  // collection users
-  final users = FirebaseFirestore.instance.collection('users');
-
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController cfPasswordController = TextEditingController();
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  Future<void> _register() async {
-    if (passwordController.text == cfPasswordController.text) {
-      if (_formKey.currentState!.validate()) {
-        try {
-          UserCredential userCredential = await _auth
-              .createUserWithEmailAndPassword(
-                email: emailController.text.trim(),
-                password: passwordController.text.trim(),
-              );
-          // ดึง UID ของผู้ใช้
-          String uid = userCredential.user!.uid;
-          log("User signUp UID: $uid");
-          // collection users
-          users.doc(uid).set({
-            'name': fullNameController.text,
-            'email': emailController.text,
-            // 'profile_picture': urlController.text,
-            'created_at': DateTime.now(),
-          });
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text("สมัครสมาชิกสำเร็จ!")));
-          Navigator.pop(context); // กลับไปหน้าก่อนหน้า (Login)
-        } catch (e) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text("เกิดข้อผิดพลาด: $e")));
-        }
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("The password and confirmation password do not match."),
-        ),
-      );
-    }
-  }
-
+  final registerController = Get.put(RegisterController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -83,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             child: Form(
-              key: _formKey,
+              key: registerController.formKey.value,
               child: Column(
                 children: [
                   Spacer(),
@@ -97,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 8),
                   TextFormField(
-                    controller: fullNameController,
+                    controller: registerController.fullNameController.value,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person),
@@ -115,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
-                    controller: emailController,
+                    controller: registerController.emailController.value,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.mail),
@@ -133,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
-                    controller: passwordController,
+                    controller: registerController.passwordController.value,
                     obscureText: true,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
@@ -151,7 +102,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
-                    controller: cfPasswordController,
+                    controller: registerController.cfPasswordController.value,
+                    obscureText: true,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
                       labelText: "Confirm Password",
@@ -172,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          _register();
+                          registerController.register();
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -196,7 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          log('Sign up');
+                          log('Sign in');
                           Navigator.pop(context);
                         },
                         child: CustomText(

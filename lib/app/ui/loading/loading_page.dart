@@ -8,7 +8,6 @@ class LoadingPage extends StatelessWidget {
   LoadingPage({super.key});
   final LoadingController loadingController = Get.put(LoadingController());
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(

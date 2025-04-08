@@ -69,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 16),
                 TextField(
                   controller: loginController.passwordController.value,
+                  obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'PASSWORD',
                     border: OutlineInputBorder(),
@@ -87,8 +88,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text("SIGN UP"),
-                          SizedBox(width: 8),
+                          Text("Login"),
+                          SizedBox(width: 4),
                           Icon(Icons.arrow_forward),
                         ],
                       ),
