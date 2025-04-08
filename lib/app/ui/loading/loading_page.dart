@@ -5,6 +5,7 @@ import 'package:flutter_airnow/app/ui/login/login_page.dart';
 import 'package:get/get.dart';
 
 class LoadingPage extends StatelessWidget {
+  LoadingPage({super.key});
   final LoadingController loadingController = Get.put(LoadingController());
 
   @override
@@ -12,6 +13,7 @@ class LoadingPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Obx(() {
+          // ignore: unnecessary_null_comparison
           if (loadingController.isLogin.value == null) {
             // ระหว่างรอการตรวจสอบสถานะล็อกอิน
             return CircularProgressIndicator();
