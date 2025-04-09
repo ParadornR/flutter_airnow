@@ -41,6 +41,9 @@ dependencies:
   firebase_auth: ^5.5.2
   cloud_firestore: ^5.6.6
   get: ^4.7.2
+  image_picker: ^1.1.2
+  firebase_storage: ^12.4.5
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3
@@ -67,7 +70,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+      - assets/data/countries_with_states.json
+      - assets/data/countries.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -96,6 +101,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
 flutter_launcher_icons:
   android: true
   ios: false
