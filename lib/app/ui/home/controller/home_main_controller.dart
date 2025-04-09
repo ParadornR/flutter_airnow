@@ -1,12 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/ui/home/home_page.dart';
-import 'package:flutter_airnow/app/ui/home/profile_page.dart';
+import 'package:flutter_airnow/app/ui/home/page/home_page.dart';
+import 'package:flutter_airnow/app/ui/home/page/profile_page.dart';
 import 'package:get/get.dart';
 
 class HomeMainController extends GetxController {
-  
   var selectedIndex = 0.obs;
   final List<Widget> widgetOptions = const [HomePage(), ProfilePage()];
   var pageController = PageController().obs;

@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/data/providers/user_provider.dart';
-import 'package:flutter_airnow/app/ui/home/profile_page_controller.dart';
+import 'package:flutter_airnow/app/ui/home/controller/profile_page_controller.dart';
 import 'package:flutter_airnow/app/ui/profile/myprofile_page.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
@@ -29,14 +29,32 @@ class _HomePageState extends State<ProfilePage> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 40),
-                CircleAvatar(radius: 48, child: Icon(Icons.person, size: 32)),
+                Obx(
+                  () => CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.15,
+                    child:
+                        userProvider.user.value!.urlImage.isEmpty
+                            ? Icon(Icons.person, size: 48)
+                            : CircleAvatar(
+                              radius: MediaQuery.of(context).size.width * 0.14,
+                              backgroundImage: NetworkImage(
+                                userProvider.user.value!.urlImage,
+                              ),
+                            ),
+                  ),
+                ),
                 SizedBox(height: 8),
-                CustomText(text: userProvider.user.value!.name, size: 18),
-                CustomText(
-                  text: userProvider.user.value!.email,
-                  size: 16,
-                  weight: FontWeight.w300,
-                  color: Colors.grey.shade500,
+                Obx(
+                  () =>
+                      CustomText(text: userProvider.user.value!.name, size: 18),
+                ),
+                Obx(
+                  () => CustomText(
+                    text: userProvider.user.value!.email,
+                    size: 16,
+                    weight: FontWeight.w300,
+                    color: Colors.grey.shade500,
+                  ),
                 ),
                 SizedBox(height: 40),
                 InkWell(
