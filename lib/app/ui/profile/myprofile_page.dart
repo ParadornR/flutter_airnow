@@ -1,11 +1,9 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/data/providers/user_provider.dart';
 import 'package:flutter_airnow/app/ui/profile/myprofile_controller.dart';
-import 'package:flutter_airnow/app/ui/profile/widget/custom_field.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class MyprofilePage extends StatefulWidget {
   const MyprofilePage({super.key});
@@ -41,6 +39,7 @@ class _MyprofilePageState extends State<MyprofilePage> {
                                 log(
                                   "actions:${myProfileController.isEdited.value}",
                                 );
+                                myProfileController.saveData();
                               },
                             ),
                           )
@@ -70,26 +69,64 @@ class _MyprofilePageState extends State<MyprofilePage> {
                   Stack(
                     children: [
                       Center(
-                        child: CircleAvatar(
-                          radius: 48,
-                          child: Icon(Icons.person, size: 32),
+                        child: Obx(
+                          () => CircleAvatar(
+                            radius: MediaQuery.of(context).size.width * 0.15,
+                            child:
+                                myProfileController.image.value != null
+                                    ? CircleAvatar(
+                                      radius:
+                                          MediaQuery.of(context).size.width *
+                                          0.14,
+                                      backgroundImage: FileImage(
+                                        File(
+                                          myProfileController.image.value!.path,
+                                        ),
+                                      ),
+                                    )
+                                    : myProfileController
+                                        .urlNetwork
+                                        .value
+                                        .isEmpty
+                                    ? Icon(Icons.person, size: 48)
+                                    : CircleAvatar(
+                                      radius:
+                                          MediaQuery.of(context).size.width *
+                                          0.14,
+                                      backgroundImage: NetworkImage(
+                                        myProfileController.urlNetwork.value,
+                                      ),
+                                    ),
+                          ),
                         ),
                       ),
-                      Obx(
-                        () => Visibility(
-                          visible: myProfileController.isEdited.value,
-                          child: Center(
+                      Center(
+                        child: Obx(
+                          () => Visibility(
+                            visible: myProfileController.isEdited.value,
                             child: Align(
                               alignment: Alignment.bottomRight,
-                              widthFactor: 2.5,
-                              heightFactor: 2.5,
+                              widthFactor:
+                                  MediaQuery.of(context).size.width * 0.0065,
+                              heightFactor:
+                                  MediaQuery.of(context).size.width * 0.0065,
                               child: InkWell(
                                 onTap: () {
                                   log("edit picture");
+                                  myProfileController.pickImage();
                                 },
                                 child: CircleAvatar(
+                                  radius: 24,
                                   backgroundColor: Colors.white,
-                                  child: Icon(Icons.image),
+                                  child: CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: Colors.grey.shade300,
+                                    child: Icon(
+                                      Icons.image,
+                                      size: 24,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

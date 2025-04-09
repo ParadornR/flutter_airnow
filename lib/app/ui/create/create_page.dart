@@ -14,6 +14,7 @@ class _CreatePageState extends State<CreatePage> {
   String? selectedValue;
   final List<String> items = ['Apple', 'Banana', 'Grapes', 'Mango'];
   bool isFindlocation = true;
+
   @override
   void initState() {
     selectedValue = items.first; // ค่าเริ่มต้น
@@ -82,42 +83,7 @@ class _CreatePageState extends State<CreatePage> {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.2 * 255),
-                      blurRadius: 8,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: selectedValue,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    isExpanded: true,
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedValue = newValue!;
-                      });
-                    },
-                    items:
-                        items.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                  ),
-                ),
-              ),
+              SizedBox(height: 16),
             ],
           ),
         ),

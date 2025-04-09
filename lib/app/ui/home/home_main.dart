@@ -1,7 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/data/providers/user_provider.dart';
-import 'package:flutter_airnow/app/ui/home/home_main_controller.dart';
+import 'package:flutter_airnow/app/ui/create/create_page.dart';
+import 'package:flutter_airnow/app/ui/home/controller/home_main_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,10 +33,7 @@ class _HomeMainState extends State<HomeMain> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             log("floatingActionButton: add()");
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-            log('${prefs.getBool('isLogin')}');
-            log('${prefs.getString('uid')}');
+            Get.to(() => CreatePage());
           },
           tooltip: 'Increment',
           shape: const CircleBorder(),
