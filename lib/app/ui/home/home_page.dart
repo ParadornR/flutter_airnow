@@ -2,20 +2,19 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/data/providers/user_provider.dart';
 import 'package:flutter_airnow/app/ui/create/create_page.dart';
-import 'package:flutter_airnow/app/ui/home/controller/home_main_controller.dart';
+import 'package:flutter_airnow/app/ui/home/controller/home_page_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeMain extends StatefulWidget {
-  const HomeMain({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomeMain> createState() => _HomeMainState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeMainState extends State<HomeMain> {
-  final homeMainController = Get.put(HomeMainController());
+class _HomePageState extends State<HomePage> {
+  final homePageController = Get.put(HomePageController());
   final userProvider = Get.put(UserProvider());
 
   @override
@@ -23,11 +22,11 @@ class _HomeMainState extends State<HomeMain> {
     return SafeArea(
       child: Scaffold(
         body: PageView(
-          controller: homeMainController.pageController.value,
+          controller: homePageController.pageController.value,
           onPageChanged: (index) {
-            homeMainController.selectedIndex.value = index;
+            homePageController.selectedIndex.value = index;
           },
-          children: homeMainController.widgetOptions,
+          children: homePageController.widgetOptions,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
@@ -47,10 +46,10 @@ class _HomeMainState extends State<HomeMain> {
               Obx(
                 () => IconButton(
                   onPressed: () {
-                    homeMainController.changePage(0);
+                    homePageController.changePage(0);
                   },
                   icon:
-                      homeMainController.selectedIndex.value == 0
+                      homePageController.selectedIndex.value == 0
                           ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -75,10 +74,10 @@ class _HomeMainState extends State<HomeMain> {
               Obx(
                 () => IconButton(
                   onPressed: () {
-                    homeMainController.changePage(1);
+                    homePageController.changePage(1);
                   },
                   icon:
-                      homeMainController.selectedIndex.value == 1
+                      homePageController.selectedIndex.value == 1
                           ? Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,

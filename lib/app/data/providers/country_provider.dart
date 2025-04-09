@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_airnow/app/data/models/country_model.dart';
 import 'package:flutter_airnow/app/data/repositories/country_repository.dart';
 import 'package:get/get.dart';
@@ -18,9 +20,9 @@ class CountryProvider extends GetxController {
   void fetchCountries() async {
     try {
       isLoading(true);
-      final List<Country> fetchedCountries =
-          await _countryRepository.getCountries();
-      countries.assignAll(fetchedCountries);
+      final Welcome welcomeData = await _countryRepository.getCountries();
+      countries.assignAll(welcomeData.data);
+      log("countries: $countries");
     } catch (e) {
       errorMessage.value = 'Failed to load countries';
     } finally {

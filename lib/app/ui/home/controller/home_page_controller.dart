@@ -1,13 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/ui/home/page/home_page.dart';
-import 'package:flutter_airnow/app/ui/home/page/profile_page.dart';
+import 'package:flutter_airnow/app/ui/home/screen/home_screen.dart';
+import 'package:flutter_airnow/app/ui/home/screen/profile_screen.dart';
 import 'package:get/get.dart';
 
-class HomeMainController extends GetxController {
+class HomePageController extends GetxController {
   var selectedIndex = 0.obs;
-  final List<Widget> widgetOptions = const [HomePage(), ProfilePage()];
+  final List<Widget> widgetOptions = const [HomeScreen(), ProfileScreen()];
   var pageController = PageController().obs;
 
   void changePage(int index) {

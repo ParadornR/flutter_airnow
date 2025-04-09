@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_airnow/app/ui/home/home_page.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_airnow/app/ui/home/home_main.dart';
 
 class LoginController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -23,7 +23,7 @@ class LoginController extends GetxController {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLogin', true);
       await prefs.setString('uid', uid);
-      Get.off(() => HomeMain());
+      Get.off(() => HomePage());
       onClose();
     } catch (e) {
       Get.snackbar('Error', e.toString());

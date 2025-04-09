@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/ui/home/home_main.dart';
+import 'package:flutter_airnow/app/ui/home/home_page.dart';
 import 'package:flutter_airnow/app/ui/loading/loading_controller.dart';
 import 'package:flutter_airnow/app/ui/login/login_page.dart';
 import 'package:get/get.dart';
@@ -21,7 +21,7 @@ class LoadingPage extends StatelessWidget {
             return LoginPage();
           } else {
             // ถ้าล็อกอินแล้ว
-            return HomeMain();
+            return HomePage();
           }
         }),
       ),

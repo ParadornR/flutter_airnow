@@ -1,20 +1,20 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/data/providers/user_provider.dart';
-import 'package:flutter_airnow/app/ui/home/controller/profile_page_controller.dart';
+import 'package:flutter_airnow/app/ui/home/controller/profile_screen_controller.dart';
 import 'package:flutter_airnow/app/ui/profile/myprofile_page.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<ProfilePage> createState() => _HomePageState();
+  State<ProfileScreen> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<ProfilePage> {
-  final profilePageController = Get.put(ProfilePageController());
+class _HomePageState extends State<ProfileScreen> {
+  final profileScreenController = Get.put(ProfileScreenController());
   final userProvider = Get.find<UserProvider>();
 
   @override
@@ -123,7 +123,7 @@ class _HomePageState extends State<ProfilePage> {
                 InkWell(
                   onTap: () {
                     log("Log out");
-                    profilePageController.logOut();
+                    profileScreenController.logOut();
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16.0),

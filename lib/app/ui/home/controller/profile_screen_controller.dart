@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_airnow/app/UI/login/login_page.dart';
 import 'package:flutter_airnow/app/data/providers/user_provider.dart';
-import 'package:flutter_airnow/app/ui/home/controller/home_main_controller.dart';
+import 'package:flutter_airnow/app/ui/home/controller/home_page_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePageController extends GetxController {
+class ProfileScreenController extends GetxController {
   Future<void> logOut() async {
     // clear data and jump to login Screen
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -20,7 +20,7 @@ class ProfilePageController extends GetxController {
 
     await FirebaseAuth.instance.signOut();
     Get.delete<UserProvider>();
-    Get.delete<HomeMainController>();
+    Get.delete<HomePageController>();
     Get.offAll(() => LoginPage());
   }
 }
