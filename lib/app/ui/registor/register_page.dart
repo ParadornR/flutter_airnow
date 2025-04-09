@@ -50,6 +50,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextFormField(
                     controller: registerController.fullNameController.value,
                     keyboardType: TextInputType.name,
+                    maxLength: 100,
+                    buildCounter: (
+                      context, {
+                      required currentLength,
+                      required maxLength,
+                      required isFocused,
+                    }) {
+                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                    },
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person),
                       labelText: "Full Name",
@@ -68,6 +77,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextFormField(
                     controller: registerController.emailController.value,
                     keyboardType: TextInputType.emailAddress,
+                    maxLength: 100,
+                    buildCounter: (
+                      context, {
+                      required currentLength,
+                      required maxLength,
+                      required isFocused,
+                    }) {
+                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                    },
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.mail),
                       labelText: "Email",
@@ -86,6 +104,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextFormField(
                     controller: registerController.passwordController.value,
                     obscureText: true,
+                    maxLength: 100,
+                    buildCounter: (
+                      context, {
+                      required currentLength,
+                      required maxLength,
+                      required isFocused,
+                    }) {
+                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                    },
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
                       labelText: "Password",
@@ -94,7 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       focusedBorder: OutlineInputBorder(),
                     ),
                     validator: (value) {
-                      if (value == null || value.length < 6) {
+                      if (value == null || value.length < 8) {
                         return "Please enter your password.";
                       }
                       return null;
@@ -104,6 +131,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextFormField(
                     controller: registerController.cfPasswordController.value,
                     obscureText: true,
+                    maxLength: 100,
+                    buildCounter: (
+                      context, {
+                      required currentLength,
+                      required maxLength,
+                      required isFocused,
+                    }) {
+                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                    },
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
                       labelText: "Confirm Password",
@@ -112,7 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       focusedBorder: OutlineInputBorder(),
                     ),
                     validator: (value) {
-                      if (value == null || value.length < 6) {
+                      if (value == null || value.length < 8) {
                         return "Please enter your confirm password.";
                       }
                       return null;

@@ -32,12 +32,15 @@ class _CreatePageState extends State<CreatePage>
             unselectedLabelColor: Colors.grey,
             tabs: [
               Tab(
-                text: "Location 1",
-                icon: Icon(Icons.home, color: Colors.white),
+                text: "Geo Location",
+                icon: Icon(
+                  Icons.edit_location_alt_outlined,
+                  color: Colors.white,
+                ),
               ),
               Tab(
-                text: "Location 2",
-                icon: Icon(Icons.email, color: Colors.white),
+                text: "GPS Location",
+                icon: Icon(Icons.gps_fixed, color: Colors.white),
               ),
             ],
           ),

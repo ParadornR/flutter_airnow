@@ -59,7 +59,18 @@ class _LoginPageState extends State<LoginPage> {
                 Obx(
                   () => TextField(
                     controller: loginController.emailController.value,
+                    keyboardType: TextInputType.emailAddress,
+                    maxLength: 100,
+                    buildCounter: (
+                      context, {
+                      required currentLength,
+                      required maxLength,
+                      required isFocused,
+                    }) {
+                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                    },
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.mail),
                       labelText: 'EMAIL',
                       border: OutlineInputBorder(),
                       enabledBorder: OutlineInputBorder(),
@@ -67,13 +78,25 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 16),
-                TextField(
-                  controller: loginController.passwordController.value,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'PASSWORD',
-                    border: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(),
+                Obx(
+                  () => TextField(
+                    controller: loginController.passwordController.value,
+                    obscureText: true,
+                    maxLength: 64,
+                    buildCounter: (
+                      context, {
+                      required currentLength,
+                      required maxLength,
+                      required isFocused,
+                    }) {
+                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.lock),
+                      labelText: 'PASSWORD',
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(),
+                    ),
                   ),
                 ),
                 SizedBox(height: 8),
@@ -108,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       onPressed: () {
                         log('Sign up');
+                        loginController.onClose();
                         Get.to(() => RegisterPage());
                       },
                       child: CustomText(
