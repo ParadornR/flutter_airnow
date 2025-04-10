@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CoordScreed extends StatefulWidget {
-  const CoordScreed({super.key, required TabController tabController});
+  const CoordScreed({super.key});
 
   @override
   State<CoordScreed> createState() => _CoordScreedState();

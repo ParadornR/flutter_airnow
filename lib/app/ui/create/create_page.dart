@@ -9,48 +9,88 @@ class CreatePage extends StatefulWidget {
   State<CreatePage> createState() => _CreatePageState();
 }
 
-class _CreatePageState extends State<CreatePage>
-    with SingleTickerProviderStateMixin {
-  late TabController tabController;
+class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
+  late final TabController _tabController;
+  final List<Widget> _body = [GeoScreen(), CoordScreed()];
 
   @override
   void initState() {
-    tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Create Location'),
-          centerTitle: true,
-          bottom: TabBar(
-            controller: tabController,
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.grey,
-            tabs: [
-              Tab(
-                text: "Geo Location",
-                icon: Icon(
-                  Icons.edit_location_alt_outlined,
-                  color: Colors.white,
+        appBar: AppBar(title: Text("Create"), centerTitle: true),
+        body: DefaultTabController(
+          length: 2,
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: kToolbarHeight,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: TabBar(
+                      controller: _tabController,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      dividerColor: Colors.transparent,
+                      indicator: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: const Color(0xFFD7FBF4),
+                      ),
+                      padding: const EdgeInsets.all(4),
+                      labelStyle: Theme.of(context).textTheme.bodyLarge,
+                      unselectedLabelStyle:
+                          Theme.of(context).textTheme.bodyMedium!,
+                      tabs: const [
+                        Tab(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.edit_location_alt_outlined),
+                              SizedBox(width: 8),
+                              Text("Geo Location"),
+                            ],
+                          ),
+                        ),
+                        Tab(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.gps_fixed),
+                              SizedBox(width: 8),
+                              Text("GPS Location"),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              Tab(
-                text: "GPS Location",
-                icon: Icon(Icons.gps_fixed, color: Colors.white),
+              Expanded(
+                flex: 9,
+                child: TabBarView(
+                  physics: ClampingScrollPhysics(),
+                  controller: _tabController,
+                  children: _body,
+                ),
               ),
             ],
           ),
-        ),
-        body: TabBarView(
-          controller: tabController,
-          children: [
-            GeoScreen(tabController: tabController),
-            CoordScreed(tabController: tabController),
-          ],
         ),
       ),
     );
