@@ -20,8 +20,8 @@ class CountryProvider extends GetxController {
   void fetchCountries() async {
     try {
       isLoading(true);
-      final Welcome welcomeData = await _countryRepository.getCountries();
-      countries.assignAll(welcomeData.data);
+      final CountryModel welcomeData = await _countryRepository.getCountries();
+      countries.addAll(welcomeData.data);
       log("countries: $countries");
     } catch (e) {
       errorMessage.value = 'Failed to load countries';

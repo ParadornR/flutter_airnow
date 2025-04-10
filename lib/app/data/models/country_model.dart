@@ -1,9 +1,9 @@
-class Welcome {
+class CountryModel {
   List<Country> data;
 
-  Welcome({required this.data});
+  CountryModel({required this.data});
 
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+  factory CountryModel.fromJson(Map<String, dynamic> json) => CountryModel(
     data: List<Country>.from(json["data"].map((x) => Country.fromJson(x))),
   );
 
