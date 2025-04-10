@@ -46,7 +46,7 @@ class MyprofileController extends GetxController {
       await FirebaseFirestore.instance.collection('users').doc(userId).update({
         'name': nameController.value.text,
         'phone': phoneController.value.text,
-        'urlImage': downloadUrl.value,
+        'urlImage': urlNetwork.value,
       });
       userProvider.fetchUserData();
       log('อัปเดตข้อมูลเรียบร้อยแล้ว');
@@ -63,7 +63,6 @@ class MyprofileController extends GetxController {
   var image = Rxn<XFile>(); // Rxn = รองรับค่า null
   final ImagePicker _picker = ImagePicker();
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  var downloadUrl = RxnString(); // RxnString = String? แบบ reactive
 
   Future<void> pickImage() async {
     final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
@@ -73,6 +72,8 @@ class MyprofileController extends GetxController {
   }
 
   Future<void> uploadImage() async {
+    log("uploadImage()");
+    if (urlNetwork == urlNetwork) return;
     if (image.value == null) return;
 
     final String fileName =
@@ -81,7 +82,7 @@ class MyprofileController extends GetxController {
 
     try {
       await ref.putFile(File(image.value!.path));
-      downloadUrl.value = await ref.getDownloadURL();
+      urlNetwork.value = await ref.getDownloadURL();
     } catch (e) {
       log("Error uploading image: $e");
     }
