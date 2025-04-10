@@ -9,14 +9,14 @@ class StateProvider extends GetxController {
   final RxBool isLoading = false.obs;
   var states = <String>[].obs;
 
-  Future<void> fetchCountry([String countryName = "Thailand"]) async {
-    log("countryName:$countryName");
+  Future<void> fetchState(String? countryName) async {
     try {
       isLoading.value = true;
-      final data = await _repository.loadCountryOnly(countryName);
+
+      final data = await _repository.loadCountryOnly(countryName ?? "");
       stateModel.value = data;
+
       states.value = data.data[countryName] ?? [];
-      log(" states.value:${states.value}");
     } catch (e) {
       log("Error: $e");
       states.clear();
