@@ -21,7 +21,6 @@ class _HomePageState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(title: Text("Profile"), centerTitle: true),
         body: Center(
           child: Padding(

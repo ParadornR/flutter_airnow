@@ -322,7 +322,6 @@ class _MyprofilePageState extends State<MyprofilePage> {
               ),
             ),
           ),
-          backgroundColor: Colors.white,
         ),
       ),
     );

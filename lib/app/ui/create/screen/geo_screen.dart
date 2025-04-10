@@ -7,7 +7,7 @@ import 'package:flutter_airnow/app/data/providers/state_proviser.dart';
 import 'package:get/get.dart';
 
 class GeoScreen extends StatefulWidget {
-  const GeoScreen({super.key, required TabController tabController});
+  const GeoScreen({super.key});
 
   @override
   State<GeoScreen> createState() => _GeoScreenState();
@@ -31,7 +31,6 @@ class _GeoScreenState extends State<GeoScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

@@ -13,7 +13,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(title: Text("AirNow"), centerTitle: true),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
