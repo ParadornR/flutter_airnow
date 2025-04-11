@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_airnow/app/data/providers/city_data_provider.dart';
 import 'package:flutter_airnow/app/data/providers/city_provider.dart';
 import 'package:flutter_airnow/app/data/providers/country_provider.dart';
 import 'package:flutter_airnow/app/data/providers/state_provider.dart';
@@ -16,6 +19,7 @@ class GeoScreen extends StatefulWidget {
 class _GeoScreenState extends State<GeoScreen> {
   final stateProviser = Get.put(StateProvider());
   final cityProvider = Get.put(CityProvider());
+  final cityDataProvider = Get.put(CityDataProvider());
   final geoController = Get.put(GeoController());
   final countryProvider = Get.put(CountryProvider());
 
@@ -286,6 +290,46 @@ class _GeoScreenState extends State<GeoScreen> {
                 ),
               );
             }),
+            ElevatedButton(
+              onPressed: () {
+                if (geoController.selectedCountryValue.value!.isNotEmpty &&
+                    geoController.selectedStateValue.value!.isNotEmpty &&
+                    geoController.selectedCityValue.value!.isNotEmpty) {
+                  cityDataProvider.loadCityData(
+                    country: geoController.selectedCountryValue.value!,
+                    state: geoController.selectedStateValue.value!,
+                    city: geoController.selectedCityValue.value!,
+                  );
+                }
+              },
+              child: Text("Serch"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final value = cityDataProvider.cityData.value!.data;
+                final pollution =
+                    cityDataProvider.cityData.value!.data.current.pollution;
+                final weather =
+                    cityDataProvider.cityData.value!.data.current.weather;
+                log("city: ${value.city}");
+                log("state: ${value.state}");
+                log("country: ${value.country}");
+                log("coordinates: ${value.location.coordinates}");
+                log("pollution ts: ${pollution.ts}");
+                log("aqicn: ${pollution.aqicn}");
+                log("maincn: ${pollution.maincn}");
+                log("aqius: ${pollution.aqius}");
+                log("mainus: ${pollution.mainus}");
+                log("weather ts: ${weather.ts}");
+                log("weather tp: ${weather.tp}");
+                log("weather pr: ${weather.pr}");
+                log("weather hu: ${weather.hu}");
+                log("weather ws: ${weather.ws}");
+                log("weather wd: ${weather.wd}");
+                log("weather ic: ${weather.ic}");
+              },
+              child: Text("test"),
+            ),
           ],
         ),
       ),

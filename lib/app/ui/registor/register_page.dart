@@ -19,184 +19,169 @@ class _RegisterPageState extends State<RegisterPage> {
       child: GestureDetector(
         onTap: FocusScope.of(context).unfocus,
         child: Scaffold(
-          body: Container(
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF3B78B3),
-                  Color(0xFFA3E4FA),
-                  Color(0xFFD1F8EF),
-                  Colors.white,
-                ],
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft,
-              ),
-            ),
-            child: Form(
-              key: registerController.formKey.value,
-              child: Column(
-                children: [
-                  Spacer(),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: CustomText(
-                      text: "Create Account",
-                      size: 36,
-                      weight: FontWeight.w700,
-                    ),
+          body: Form(
+            key: registerController.formKey.value,
+            child: Column(
+              children: [
+                Spacer(),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: CustomText(
+                    text: "Create Account",
+                    size: 36,
+                    weight: FontWeight.w700,
                   ),
-                  SizedBox(height: 8),
-                  TextFormField(
-                    controller: registerController.fullNameController.value,
-                    keyboardType: TextInputType.name,
-                    maxLength: 100,
-                    buildCounter: (
-                      context, {
-                      required currentLength,
-                      required maxLength,
-                      required isFocused,
-                    }) {
-                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person),
-                      labelText: "Full Name",
-                      border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your full name.";
-                      }
-                      return null;
-                    },
+                ),
+                SizedBox(height: 8),
+                TextFormField(
+                  controller: registerController.fullNameController.value,
+                  keyboardType: TextInputType.name,
+                  maxLength: 100,
+                  buildCounter: (
+                    context, {
+                    required currentLength,
+                    required maxLength,
+                    required isFocused,
+                  }) {
+                    return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                  },
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.person),
+                    labelText: "Full Name",
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(),
                   ),
-                  SizedBox(height: 16),
-                  TextFormField(
-                    controller: registerController.emailController.value,
-                    keyboardType: TextInputType.emailAddress,
-                    maxLength: 100,
-                    buildCounter: (
-                      context, {
-                      required currentLength,
-                      required maxLength,
-                      required isFocused,
-                    }) {
-                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.mail),
-                      labelText: "Email",
-                      border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your full name.";
-                      }
-                      return null;
-                    },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your full name.";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: registerController.emailController.value,
+                  keyboardType: TextInputType.emailAddress,
+                  maxLength: 100,
+                  buildCounter: (
+                    context, {
+                    required currentLength,
+                    required maxLength,
+                    required isFocused,
+                  }) {
+                    return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                  },
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.mail),
+                    labelText: "Email",
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(),
                   ),
-                  SizedBox(height: 16),
-                  TextFormField(
-                    controller: registerController.passwordController.value,
-                    obscureText: true,
-                    maxLength: 100,
-                    buildCounter: (
-                      context, {
-                      required currentLength,
-                      required maxLength,
-                      required isFocused,
-                    }) {
-                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock),
-                      labelText: "Password",
-                      border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.length < 8) {
-                        return "Please enter your password.";
-                      }
-                      return null;
-                    },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your full name.";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: registerController.passwordController.value,
+                  obscureText: true,
+                  maxLength: 100,
+                  buildCounter: (
+                    context, {
+                    required currentLength,
+                    required maxLength,
+                    required isFocused,
+                  }) {
+                    return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                  },
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.lock),
+                    labelText: "Password",
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(),
                   ),
-                  SizedBox(height: 16),
-                  TextFormField(
-                    controller: registerController.cfPasswordController.value,
-                    obscureText: true,
-                    maxLength: 100,
-                    buildCounter: (
-                      context, {
-                      required currentLength,
-                      required maxLength,
-                      required isFocused,
-                    }) {
-                      return SizedBox.shrink(); // ไม่แสดงตัวเลข
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock),
-                      labelText: "Confirm Password",
-                      border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.length < 8) {
-                        return "Please enter your confirm password.";
-                      }
-                      return null;
-                    },
+                  validator: (value) {
+                    if (value == null || value.length < 8) {
+                      return "Please enter your password.";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: registerController.cfPasswordController.value,
+                  obscureText: true,
+                  maxLength: 100,
+                  buildCounter: (
+                    context, {
+                    required currentLength,
+                    required maxLength,
+                    required isFocused,
+                  }) {
+                    return SizedBox.shrink(); // ไม่แสดงตัวเลข
+                  },
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.lock),
+                    labelText: "Confirm Password",
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(),
                   ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          registerController.register();
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text("SIGN UP"),
-                            SizedBox(width: 8),
-                            Icon(Icons.arrow_forward),
-                          ],
-                        ),
+                  validator: (value) {
+                    if (value == null || value.length < 8) {
+                      return "Please enter your confirm password.";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        registerController.register();
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("SIGN UP"),
+                          SizedBox(width: 8),
+                          Icon(Icons.arrow_forward),
+                        ],
                       ),
-                    ],
-                  ),
-                  Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomText(
-                        text: "Already have a accont?",
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomText(
+                      text: "Already have a accont?",
+                      size: 16,
+                      weight: FontWeight.w200,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        log('Sign in');
+                        Get.back();
+                      },
+                      child: CustomText(
+                        text: "Sign in",
                         size: 16,
-                        weight: FontWeight.w200,
+                        weight: FontWeight.w600,
                       ),
-                      TextButton(
-                        onPressed: () {
-                          log('Sign in');
-                          Get.back();
-                        },
-                        child: CustomText(
-                          text: "Sign in",
-                          size: 16,
-                          weight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),

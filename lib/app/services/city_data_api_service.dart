@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_airnow/app/data/models/city_data_model.dart';
 import 'dart:convert';
 
@@ -12,11 +14,11 @@ class CityDataApiService extends GetConnect {
     String country,
   ) async {
     final url =
-        "http://api.airvisual.com/v2cities?city=$city&state=$state&country=$country&key=$apiKey";
+        "http://api.airvisual.com/v2/city?city=$city&state=$state&country=$country&key=$apiKey";
     final response = await get(url);
-
+    log("url: $url");
     if (response.statusCode == 200) {
-      return CityDataModel.fromJson(json.decode(response.body));
+      return CityDataModel.fromJson(response.body);
     } else {
       throw Exception('Failed to load city data');
     }
