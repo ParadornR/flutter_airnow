@@ -22,7 +22,7 @@ class CountryProvider extends GetxController {
       isLoading(true);
       final CountryModel welcomeData = await _countryRepository.getCountries();
       countries.addAll(welcomeData.data);
-      log("countries: $countries");
+      log("countriesData: $countries");
     } catch (e) {
       errorMessage.value = 'Failed to load countries';
     } finally {

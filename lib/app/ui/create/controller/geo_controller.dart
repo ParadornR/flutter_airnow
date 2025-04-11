@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_airnow/app/data/providers/city_provider.dart';
 import 'package:flutter_airnow/app/data/providers/state_provider.dart';
 import 'package:get/get.dart';
 
 class GeoController extends GetxController {
   final stateProviser = Get.find<StateProvider>();
+  final cityProvider = Get.find<CityProvider>();
 
   var selectedCountryValue = Rx<String?>(null);
   var selectedStateValue = Rx<String?>(null);
@@ -18,7 +20,7 @@ class GeoController extends GetxController {
   onChangedCountry(value) {
     selectedStateValue.value = null;
     log("selectedCountryValue:$value");
-    selectedCountryValue.value = value as String?;
+    selectedCountryValue.value = value;
     log("Country:${selectedCountryValue.value}");
     stateProviser.fetchState(selectedCountryValue.value);
   }
@@ -30,10 +32,15 @@ class GeoController extends GetxController {
   }
 
   onChangedState(value) {
+    selectedCityValue.value = null;
     log("selectedStateValue:$value");
-    selectedStateValue.value = value as String?;
+    selectedStateValue.value = value;
     log("Country:${selectedCountryValue.value}");
     log("State:${selectedStateValue.string}");
+    cityProvider.loadCity(
+      selectedStateValue.value!,
+      selectedCountryValue.value!,
+    );
   }
 
   onMenuStateChangeState(isOpen) {
@@ -44,15 +51,15 @@ class GeoController extends GetxController {
 
   onChangedCity(value) {
     log("selectedStateValue:$value");
-    selectedCityValue.value = value as String?;
+    selectedCityValue.value = value;
     log("Country:${selectedCountryValue.value}");
     log("State:${selectedStateValue.string}");
-    log("State:${selectedCityValue.string}");
+    log("City:${selectedCityValue.string}");
   }
 
   onMenuStateChangeCity(isOpen) {
     if (!isOpen) {
-      stateController.clear();
+      cityController.clear();
     }
   }
 }

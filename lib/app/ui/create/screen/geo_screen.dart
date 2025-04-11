@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_airnow/app/data/providers/city_provider.dart';
 import 'package:flutter_airnow/app/data/providers/country_provider.dart';
 import 'package:flutter_airnow/app/data/providers/state_provider.dart';
 import 'package:flutter_airnow/app/ui/create/controller/geo_controller.dart';
@@ -14,6 +15,7 @@ class GeoScreen extends StatefulWidget {
 
 class _GeoScreenState extends State<GeoScreen> {
   final stateProviser = Get.put(StateProvider());
+  final cityProvider = Get.put(CityProvider());
   final geoController = Get.put(GeoController());
   final countryProvider = Get.put(CountryProvider());
 
@@ -214,25 +216,25 @@ class _GeoScreenState extends State<GeoScreen> {
                   child: DropdownButton2<String>(
                     isExpanded: true,
                     hint: Text(
-                      'Select State',
+                      'Select City',
                       style: TextStyle(
                         fontSize: 14,
                         color: Theme.of(context).hintColor,
                       ),
                     ),
                     items:
-                        stateProviser.states
+                        cityProvider.city.value?.data
                             .map(
                               (item) => DropdownMenuItem(
-                                value: item,
+                                value: item.city,
                                 child: Text(
-                                  item,
+                                  item.city,
                                   style: const TextStyle(fontSize: 14),
                                 ),
                               ),
                             )
                             .toList(),
-                    value: geoController.selectedStateValue.value,
+                    value: geoController.selectedCityValue.value,
                     onChanged: (value) => geoController.onChangedCity(value),
                     buttonStyleData: const ButtonStyleData(
                       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -264,7 +266,7 @@ class _GeoScreenState extends State<GeoScreen> {
                               horizontal: 10,
                               vertical: 8,
                             ),
-                            hintText: 'Search for Country',
+                            hintText: 'Search for City',
                             hintStyle: const TextStyle(fontSize: 12),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
