@@ -20,6 +20,7 @@ class MyprofileController extends GetxController {
   @override
   void onInit() {
     loadData();
+    
     super.onInit();
   }
 

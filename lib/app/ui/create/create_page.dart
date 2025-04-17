@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/ui/create/screen/coord_screed.dart';
 import 'package:flutter_airnow/app/ui/create/screen/geo_screen.dart';
 
+
 class CreatePage extends StatefulWidget {
   const CreatePage({super.key});
 

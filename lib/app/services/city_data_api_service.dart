@@ -1,8 +1,5 @@
 import 'dart:developer';
-
 import 'package:flutter_airnow/app/data/models/city_data_model.dart';
-import 'dart:convert';
-
 import 'package:get/get_connect/connect.dart';
 
 class CityDataApiService extends GetConnect {
