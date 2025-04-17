@@ -1,11 +1,12 @@
 import 'dart:developer';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/data/providers/city_data_provider.dart';
 import 'package:flutter_airnow/app/data/providers/city_provider.dart';
 import 'package:flutter_airnow/app/data/providers/country_provider.dart';
 import 'package:flutter_airnow/app/data/providers/state_provider.dart';
+import 'package:flutter_airnow/app/data/providers/user_provider.dart';
 import 'package:flutter_airnow/app/ui/create/controller/geo_controller.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,9 @@ class GeoScreen extends StatefulWidget {
 }
 
 class _GeoScreenState extends State<GeoScreen> {
+  // find
+  final userProvider = Get.find<UserProvider>();
+  // put
   final stateProviser = Get.put(StateProvider());
   final cityProvider = Get.put(CityProvider());
   final cityDataProvider = Get.put(CityDataProvider());
@@ -305,28 +309,84 @@ class _GeoScreenState extends State<GeoScreen> {
               child: Text("Serch"),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 final value = cityDataProvider.cityData.value!.data;
                 final pollution =
                     cityDataProvider.cityData.value!.data.current.pollution;
                 final weather =
                     cityDataProvider.cityData.value!.data.current.weather;
-                log("city: ${value.city}");
-                log("state: ${value.state}");
-                log("country: ${value.country}");
-                log("coordinates: ${value.location.coordinates}");
-                log("pollution ts: ${pollution.ts}");
-                log("aqicn: ${pollution.aqicn}");
-                log("maincn: ${pollution.maincn}");
-                log("aqius: ${pollution.aqius}");
-                log("mainus: ${pollution.mainus}");
-                log("weather ts: ${weather.ts}");
-                log("weather tp: ${weather.tp}");
-                log("weather pr: ${weather.pr}");
-                log("weather hu: ${weather.hu}");
-                log("weather ws: ${weather.ws}");
-                log("weather wd: ${weather.wd}");
-                log("weather ic: ${weather.ic}");
+                try {
+                  final userId = userProvider.userId.value;
+                  final locationRef = FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(userId)
+                      .collection('location');
+
+                  // 1. บันทึกข้อมูล location
+                  final cityDocRef = locationRef.doc(value.city);
+                  await cityDocRef.set({
+                    'city': value.city,
+                    'state': value.state,
+                    'country': value.country,
+                    'location': value.location.coordinates,
+                    'created_at': DateTime.now(),
+                  });
+
+                  final pollutionRef = cityDocRef.collection('pollution');
+                  final pollutionQuery =
+                      await pollutionRef
+                          .where('ts', isEqualTo: pollution.ts)
+                          .get();
+                  if (pollutionQuery.docs.isEmpty) {
+                    await pollutionRef.add({
+                      'aqicn': pollution.aqicn,
+                      'aqius': pollution.aqius,
+                      'maincn': pollution.maincn,
+                      'mainus': pollution.mainus,
+                      'ts': pollution.ts,
+                      'created_at': DateTime.now(),
+                    });
+                  } else {
+                    log('ข้อมูล pollution ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
+                  }
+
+                  final weatherRef = cityDocRef.collection('weather');
+                  final weatherQuery =
+                      await weatherRef.where('ts', isEqualTo: weather.ts).get();
+                  if (weatherQuery.docs.isEmpty) {
+                    await weatherRef.add({
+                      'hu': weather.hu,
+                      'ic': weather.ic,
+                      'pr': weather.pr,
+                      'tp': weather.tp,
+                      'wd': weather.wd,
+                      'ws': weather.ws,
+                      'ts': weather.ts,
+                      'created_at': DateTime.now(),
+                    });
+                  } else {
+                    log('ข้อมูล weather ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
+                  }
+                } catch (e, stackTrace) {
+                  log('เกิดข้อผิดพลาดในการบันทึกข้อมูล: $e\n$stackTrace');
+                }
+
+                // log("city: ${value.city}");
+                // log("state: ${value.state}");
+                // log("country: ${value.country}");
+                // log("coordinates: ${value.location.coordinates}");
+                // log("pollution ts: ${pollution.ts}");
+                // log("pollution aqicn: ${pollution.aqicn}");
+                // log("pollution maincn: ${pollution.maincn}");
+                // log("pollution aqius: ${pollution.aqius}");
+                // log("pollution mainus: ${pollution.mainus}");
+                // log("weather ts: ${weather.ts}");
+                // log("weather tp: ${weather.tp}");
+                // log("weather pr: ${weather.pr}");
+                // log("weather hu: ${weather.hu}");
+                // log("weather ws: ${weather.ws}");
+                // log("weather wd: ${weather.wd}");
+                // log("weather ic: ${weather.ic}");
               },
               child: Text("test"),
             ),

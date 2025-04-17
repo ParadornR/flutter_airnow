@@ -1,13 +1,15 @@
 import 'dart:developer';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_airnow/app/data/providers/city_provider.dart';
 import 'package:flutter_airnow/app/data/providers/state_provider.dart';
+import 'package:flutter_airnow/app/data/providers/user_provider.dart';
 import 'package:get/get.dart';
 
 class GeoController extends GetxController {
+  // find
   final stateProviser = Get.find<StateProvider>();
   final cityProvider = Get.find<CityProvider>();
+  final userProvider = Get.find<UserProvider>();
 
   var selectedCountryValue = Rx<String?>(null);
   var selectedStateValue = Rx<String?>(null);
