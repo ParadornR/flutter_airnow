@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:action_slider/action_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dar
 import 'package:flutter_airnow/app/ui/create/controller/country_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/geo_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/state_controller.dart';
+import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
 
 class GeoScreen extends StatefulWidget {
@@ -27,7 +29,7 @@ class _GeoScreenState extends State<GeoScreen> {
   final cityDataController = Get.put(CityDataController());
 
   final geoController = Get.put(GeoController());
-
+  ActionSliderController? controller = ActionSliderController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -404,6 +406,30 @@ class _GeoScreenState extends State<GeoScreen> {
                 }
               },
               child: Text("add"),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ActionSlider.standard(
+                sliderBehavior: SliderBehavior.stretch,
+                width: 300.0,
+                backgroundColor: Theme.of(context).primaryColor,
+                toggleColor: Theme.of(context).appBarTheme.foregroundColor,
+                action: (controller) async {
+                  controller.loading(); //starts loading animation
+                  await Future.delayed(const Duration(seconds: 3));
+                  controller.failure(); //starts loading animation
+                  await Future.delayed(const Duration(seconds: 3));
+                  controller.success(); //starts success animation
+                  await Future.delayed(const Duration(seconds: 1));
+                  controller.reset(); //resets the slider
+                },
+                child: CustomText(
+                  text: 'Slide to confirm',
+                  size: 14,
+                  color: Theme.of(context).appBarTheme.foregroundColor,
+                ),
+              ),
             ),
           ],
         ),
