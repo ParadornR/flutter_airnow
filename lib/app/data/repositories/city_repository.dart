@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter_airnow/app/data/models/city_model.dart';
-import 'package:flutter_airnow/app/services/city_api_service.dart';
+import 'package:flutter_airnow/app/data/providers/city_provider.dart';
 
 class CityRepository {
   final CityApiService apiService;
@@ -9,12 +7,11 @@ class CityRepository {
   CityRepository({required this.apiService});
 
   Future<CityApiModel> fetchCity(String state, String country) async {
-    log("(fetchCityData state):$state");
-    log("(fetchCityData country):$country");
-    try {
-      return await apiService.getCity(state, country);
-    } catch (e) {
-      rethrow;
+    final response = await apiService.fetchCity(state, country);
+    if (response.status.hasError) {
+      throw Exception("Error fetching city data");
+    } else {
+      return CityApiModel.fromJson(response.body);
     }
   }
 }

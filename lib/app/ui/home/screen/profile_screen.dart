@@ -31,6 +31,7 @@ class _HomePageState extends State<ProfileScreen> {
                 Obx(
                   () => CircleAvatar(
                     radius: MediaQuery.of(context).size.width * 0.15,
+                    backgroundColor: Theme.of(context).primaryColor,
                     child:
                         userProvider.user.value!.urlImage.isEmpty
                             ? Icon(Icons.person, size: 48)

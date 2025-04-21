@@ -11,9 +11,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -24,14 +23,11 @@ class MyApp extends StatelessWidget {
   }
 
   ThemeData _buildTheme(Brightness brightness) {
-    final baseTheme = ThemeData(
-      brightness: brightness,
-      useMaterial3: true, // ปิด M3 ถ้าไม่อยากให้โดน colorScheme ควบคุม
-    );
+    final baseTheme = ThemeData(brightness: brightness, useMaterial3: true);
 
     return baseTheme.copyWith(
       primaryColor: const Color(0xFF3B78B3),
-      scaffoldBackgroundColor: const Color(0xFFD7FBF4),
+      scaffoldBackgroundColor: Colors.white,
       cardColor: const Color(0xFFA3E4FA),
       dividerColor: const Color(0xFFD1F8EF),
 
@@ -48,10 +44,9 @@ class MyApp extends StatelessWidget {
       colorScheme: baseTheme.colorScheme.copyWith(
         primary: const Color(0xFF3B78B3),
         secondary: const Color(0xFF578FCC),
-        background: const Color(0xFFD7FBF4),
+        surface: const Color(0xFFD7FBF4),
       ),
-
-      textTheme: GoogleFonts.promptTextTheme(baseTheme.textTheme),
+      textTheme: GoogleFonts.promptTextTheme(),
     );
   }
 }

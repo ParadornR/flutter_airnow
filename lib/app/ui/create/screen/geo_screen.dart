@@ -2,12 +2,12 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/data/providers/city_data_provider.dart';
-import 'package:flutter_airnow/app/data/providers/city_provider.dart';
-import 'package:flutter_airnow/app/data/providers/country_provider.dart';
-import 'package:flutter_airnow/app/data/providers/state_provider.dart';
 import 'package:flutter_airnow/app/data/providers/user_provider.dart';
+import 'package:flutter_airnow/app/ui/create/controller/city_controller.dart';
+import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
+import 'package:flutter_airnow/app/ui/create/controller/country_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/geo_controller.dart';
+import 'package:flutter_airnow/app/ui/create/controller/state_controller.dart';
 import 'package:get/get.dart';
 
 class GeoScreen extends StatefulWidget {
@@ -21,11 +21,12 @@ class _GeoScreenState extends State<GeoScreen> {
   // find
   final userProvider = Get.find<UserProvider>();
   // put
-  final stateProviser = Get.put(StateProvider());
-  final cityProvider = Get.put(CityProvider());
-  final cityDataProvider = Get.put(CityDataProvider());
+  final countryController = Get.put(CountryController());
+  final stateController = Get.put(StateController());
+  final cityController = Get.put(CityController());
+  final cityDataController = Get.put(CityDataController());
+
   final geoController = Get.put(GeoController());
-  final countryProvider = Get.put(CountryProvider());
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class _GeoScreenState extends State<GeoScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Obx(() {
-              if (countryProvider.isLoading.value) {
+              if (countryController.isLoading.value) {
                 return Center(child: CircularProgressIndicator());
               }
               return Container(
@@ -57,7 +58,7 @@ class _GeoScreenState extends State<GeoScreen> {
                       ),
                     ),
                     items:
-                        countryProvider.countries
+                        countryController.countries
                             .map(
                               (item) => DropdownMenuItem(
                                 value: item.country,
@@ -80,7 +81,7 @@ class _GeoScreenState extends State<GeoScreen> {
                     ),
                     menuItemStyleData: const MenuItemStyleData(height: 40),
                     dropdownSearchData: DropdownSearchData(
-                      searchController: geoController.countryController,
+                      searchController: geoController.countryTextEditing,
                       searchInnerWidgetHeight: 50,
                       searchInnerWidget: Container(
                         height: 50,
@@ -93,7 +94,7 @@ class _GeoScreenState extends State<GeoScreen> {
                         child: TextFormField(
                           expands: true,
                           maxLines: null,
-                          controller: geoController.countryController,
+                          controller: geoController.countryTextEditing,
                           decoration: InputDecoration(
                             isDense: true,
                             contentPadding: const EdgeInsets.symmetric(
@@ -122,7 +123,7 @@ class _GeoScreenState extends State<GeoScreen> {
               );
             }),
             Obx(() {
-              if (stateProviser.isLoading.value) {
+              if (stateController.isLoadingState.value) {
                 return Center(child: CircularProgressIndicator());
               }
               return Container(
@@ -144,7 +145,7 @@ class _GeoScreenState extends State<GeoScreen> {
                       ),
                     ),
                     items:
-                        stateProviser.states
+                        stateController.states
                             .map(
                               (item) => DropdownMenuItem(
                                 value: item,
@@ -167,7 +168,7 @@ class _GeoScreenState extends State<GeoScreen> {
                     ),
                     menuItemStyleData: const MenuItemStyleData(height: 40),
                     dropdownSearchData: DropdownSearchData(
-                      searchController: geoController.stateController,
+                      searchController: geoController.stateTextEditing,
                       searchInnerWidgetHeight: 50,
                       searchInnerWidget: Container(
                         height: 50,
@@ -180,7 +181,7 @@ class _GeoScreenState extends State<GeoScreen> {
                         child: TextFormField(
                           expands: true,
                           maxLines: null,
-                          controller: geoController.stateController,
+                          controller: geoController.stateTextEditing,
                           decoration: InputDecoration(
                             isDense: true,
                             contentPadding: const EdgeInsets.symmetric(
@@ -209,7 +210,7 @@ class _GeoScreenState extends State<GeoScreen> {
               );
             }),
             Obx(() {
-              if (stateProviser.isLoading.value) {
+              if (cityController.isLoadingCity.value) {
                 return Center(child: CircularProgressIndicator());
               }
               return Container(
@@ -231,7 +232,7 @@ class _GeoScreenState extends State<GeoScreen> {
                       ),
                     ),
                     items:
-                        cityProvider.city.value?.data
+                        cityController.city.value?.data
                             .map(
                               (item) => DropdownMenuItem(
                                 value: item.city,
@@ -254,7 +255,7 @@ class _GeoScreenState extends State<GeoScreen> {
                     ),
                     menuItemStyleData: const MenuItemStyleData(height: 40),
                     dropdownSearchData: DropdownSearchData(
-                      searchController: geoController.stateController,
+                      searchController: geoController.stateTextEditing,
                       searchInnerWidgetHeight: 50,
                       searchInnerWidget: Container(
                         height: 50,
@@ -267,7 +268,7 @@ class _GeoScreenState extends State<GeoScreen> {
                         child: TextFormField(
                           expands: true,
                           maxLines: null,
-                          controller: geoController.stateController,
+                          controller: geoController.stateTextEditing,
                           decoration: InputDecoration(
                             isDense: true,
                             contentPadding: const EdgeInsets.symmetric(
@@ -294,12 +295,13 @@ class _GeoScreenState extends State<GeoScreen> {
                 ),
               );
             }),
+            //use load data from api
             ElevatedButton(
               onPressed: () {
                 if (geoController.selectedCountryValue.value!.isNotEmpty &&
                     geoController.selectedStateValue.value!.isNotEmpty &&
                     geoController.selectedCityValue.value!.isNotEmpty) {
-                  cityDataProvider.loadCityData(
+                  cityDataController.loadDataCityWithCSC(
                     country: geoController.selectedCountryValue.value!,
                     state: geoController.selectedStateValue.value!,
                     city: geoController.selectedCityValue.value!,
@@ -308,13 +310,41 @@ class _GeoScreenState extends State<GeoScreen> {
               },
               child: Text("Serch"),
             ),
+            //use show data
+            ElevatedButton(
+              onPressed: () {
+                final value = cityDataController.cityData.value!.data;
+                final pollution =
+                    cityDataController.cityData.value!.data.current.pollution;
+                final weather =
+                    cityDataController.cityData.value!.data.current.weather;
+                log("city: ${value.city}");
+                log("state: ${value.state}");
+                log("country: ${value.country}");
+                log("coordinates: ${value.location.coordinates}");
+                log("pollution ts: ${pollution.ts}");
+                log("pollution aqicn: ${pollution.aqicn}");
+                log("pollution maincn: ${pollution.maincn}");
+                log("pollution aqius: ${pollution.aqius}");
+                log("pollution mainus: ${pollution.mainus}");
+                log("weather ts: ${weather.ts}");
+                log("weather tp: ${weather.tp}");
+                log("weather pr: ${weather.pr}");
+                log("weather hu: ${weather.hu}");
+                log("weather ws: ${weather.ws}");
+                log("weather wd: ${weather.wd}");
+                log("weather ic: ${weather.ic}");
+              },
+              child: Text("Test"),
+            ),
+            //use update
             ElevatedButton(
               onPressed: () async {
-                final value = cityDataProvider.cityData.value!.data;
+                final value = cityDataController.cityData.value!.data;
                 final pollution =
-                    cityDataProvider.cityData.value!.data.current.pollution;
+                    cityDataController.cityData.value!.data.current.pollution;
                 final weather =
-                    cityDataProvider.cityData.value!.data.current.weather;
+                    cityDataController.cityData.value!.data.current.weather;
                 try {
                   final userId = userProvider.userId.value;
                   final locationRef = FirebaseFirestore.instance
@@ -329,7 +359,7 @@ class _GeoScreenState extends State<GeoScreen> {
                     'state': value.state,
                     'country': value.country,
                     'location': value.location.coordinates,
-                    'created_at': DateTime.now(),
+                    'last_update_at': DateTime.now(),
                   });
 
                   final pollutionRef = cityDocRef.collection('pollution');
@@ -337,6 +367,7 @@ class _GeoScreenState extends State<GeoScreen> {
                       await pollutionRef
                           .where('ts', isEqualTo: pollution.ts)
                           .get();
+                  log("[pollution.ts]:${pollution.ts}");
                   if (pollutionQuery.docs.isEmpty) {
                     await pollutionRef.add({
                       'aqicn': pollution.aqicn,
@@ -353,6 +384,7 @@ class _GeoScreenState extends State<GeoScreen> {
                   final weatherRef = cityDocRef.collection('weather');
                   final weatherQuery =
                       await weatherRef.where('ts', isEqualTo: weather.ts).get();
+                  log("[weather.ts]:${weather.ts}");
                   if (weatherQuery.docs.isEmpty) {
                     await weatherRef.add({
                       'hu': weather.hu,
@@ -370,25 +402,8 @@ class _GeoScreenState extends State<GeoScreen> {
                 } catch (e, stackTrace) {
                   log('เกิดข้อผิดพลาดในการบันทึกข้อมูล: $e\n$stackTrace');
                 }
-
-                // log("city: ${value.city}");
-                // log("state: ${value.state}");
-                // log("country: ${value.country}");
-                // log("coordinates: ${value.location.coordinates}");
-                // log("pollution ts: ${pollution.ts}");
-                // log("pollution aqicn: ${pollution.aqicn}");
-                // log("pollution maincn: ${pollution.maincn}");
-                // log("pollution aqius: ${pollution.aqius}");
-                // log("pollution mainus: ${pollution.mainus}");
-                // log("weather ts: ${weather.ts}");
-                // log("weather tp: ${weather.tp}");
-                // log("weather pr: ${weather.pr}");
-                // log("weather hu: ${weather.hu}");
-                // log("weather ws: ${weather.ws}");
-                // log("weather wd: ${weather.wd}");
-                // log("weather ic: ${weather.ic}");
               },
-              child: Text("test"),
+              child: Text("add"),
             ),
           ],
         ),

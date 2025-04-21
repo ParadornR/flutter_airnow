@@ -1,35 +1,33 @@
 import 'dart:developer';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_airnow/app/data/providers/city_provider.dart';
-import 'package:flutter_airnow/app/data/providers/state_provider.dart';
-import 'package:flutter_airnow/app/data/providers/user_provider.dart';
+import 'package:flutter_airnow/app/ui/create/controller/city_controller.dart';
+import 'package:flutter_airnow/app/ui/create/controller/state_controller.dart';
 import 'package:get/get.dart';
 
 class GeoController extends GetxController {
   // find
-  final stateProviser = Get.find<StateProvider>();
-  final cityProvider = Get.find<CityProvider>();
-  final userProvider = Get.find<UserProvider>();
+  final stateController = Get.find<StateController>();
+  final cityController = Get.find<CityController>();
 
   var selectedCountryValue = Rx<String?>(null);
   var selectedStateValue = Rx<String?>(null);
   var selectedCityValue = Rx<String?>(null);
 
-  final countryController = TextEditingController();
-  final stateController = TextEditingController();
-  final cityController = TextEditingController();
+  final countryTextEditing = TextEditingController();
+  final stateTextEditing = TextEditingController();
+  final cityTextEditing = TextEditingController();
 
   onChangedCountry(value) {
     selectedStateValue.value = null;
     log("selectedCountryValue:$value");
     selectedCountryValue.value = value;
     log("Country:${selectedCountryValue.value}");
-    stateProviser.fetchState(selectedCountryValue.value);
+    stateController.fetchStates(selectedCountryValue.value);
   }
 
   onMenuStateChangeCountry(isOpen) {
     if (!isOpen) {
-      countryController.clear();
+      countryTextEditing.clear();
     }
   }
 
@@ -39,15 +37,15 @@ class GeoController extends GetxController {
     selectedStateValue.value = value;
     log("Country:${selectedCountryValue.value}");
     log("State:${selectedStateValue.string}");
-    cityProvider.loadCity(
-      selectedStateValue.value!,
-      selectedCountryValue.value!,
+    cityController.loadCity(
+      country: selectedCountryValue.value!,
+      state: selectedStateValue.value!,
     );
   }
 
   onMenuStateChangeState(isOpen) {
     if (!isOpen) {
-      stateController.clear();
+      stateTextEditing.clear();
     }
   }
 
@@ -61,7 +59,7 @@ class GeoController extends GetxController {
 
   onMenuStateChangeCity(isOpen) {
     if (!isOpen) {
-      cityController.clear();
+      cityTextEditing.clear();
     }
   }
 }

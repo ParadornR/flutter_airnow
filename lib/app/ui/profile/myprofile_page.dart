@@ -72,6 +72,7 @@ class _MyprofilePageState extends State<MyprofilePage> {
                         child: Obx(
                           () => CircleAvatar(
                             radius: MediaQuery.of(context).size.width * 0.15,
+                            backgroundColor: Theme.of(context).primaryColor,
                             child:
                                 myProfileController.image.value != null
                                     ? CircleAvatar(
