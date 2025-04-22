@@ -5,6 +5,7 @@ import 'package:flutter_airnow/app/data/models/city_data_model.dart';
 import 'package:flutter_airnow/app/data/providers/user_provider.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart' as osm;
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,16 @@ class GpsController extends GetxController {
   var value = Rx<Data?>(null);
   var pollution = Rx<Pollution?>(null);
   var weather = Rx<Weather?>(null);
+
+  late osm.MapController controller;
+
+  @override
+  void onInit() {
+    super.onInit();
+    canSave.value = false;
+    showCurrentLocation();
+    // loadData();
+  }
 
   Future<Position> _getCurrentLocation() async {
     bool serviceEnabled;
@@ -54,6 +65,13 @@ class GpsController extends GetxController {
     try {
       Position position = await _getCurrentLocation();
       log('Location = [lat: ${position.latitude}, lon: ${position.longitude}]');
+
+      controller = osm.MapController(
+        initPosition: osm.GeoPoint(
+          latitude: position.latitude,
+          longitude: position.longitude,
+        ),
+      );
       latitude.value = position.latitude;
       longitude.value = position.longitude;
       log("[showCurrentLocation]: succeed");
@@ -76,8 +94,8 @@ class GpsController extends GetxController {
   }
 
   var canSave = false.obs;
-  var isAllNotEmpty = false.obs;
   saveData() async {
+    await loadData();
     log("[saveData]: saving data . . .");
     final value = cityDataController.cityData.value!.data;
     final pollution = cityDataController.cityData.value!.data.current.pollution;
@@ -132,11 +150,9 @@ class GpsController extends GetxController {
         await homeScreenController.fetchUserData();
       } else {
         log('มีข้อมูล location นี้แล้ว');
-        canSave.value = false;
       }
     } catch (e, stackTrace) {
       log('เกิดข้อผิดพลาดในการบันทึกข้อมูล: $e\n$stackTrace');
-      canSave.value = false;
     }
   }
 }
