@@ -91,6 +91,8 @@ class _MyprofilePageState extends State<MyprofilePage> {
                                         .isEmpty
                                     ? Icon(Icons.person, size: 48)
                                     : CircleAvatar(
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor,
                                       radius:
                                           MediaQuery.of(context).size.width *
                                           0.14,
@@ -125,7 +127,7 @@ class _MyprofilePageState extends State<MyprofilePage> {
                                     child: Icon(
                                       Icons.image,
                                       size: 24,
-                                      color: Colors.black,
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                                 ),
@@ -142,11 +144,7 @@ class _MyprofilePageState extends State<MyprofilePage> {
                       Container(
                         padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                          color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(16),
                             topRight: Radius.circular(16),
@@ -155,9 +153,18 @@ class _MyprofilePageState extends State<MyprofilePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Icon(Icons.person),
+                            Icon(
+                              Icons.person,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                             SizedBox(width: 16),
-                            CustomText(text: "Name", size: 16),
+                            CustomText(
+                              text: "Name",
+                              size: 16,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                           ],
                         ),
                       ),
@@ -167,11 +174,7 @@ class _MyprofilePageState extends State<MyprofilePage> {
                           left: MediaQuery.of(context).size.width * 0.1,
                         ),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                          color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(16),
                             bottomRight: Radius.circular(16),
@@ -182,6 +185,10 @@ class _MyprofilePageState extends State<MyprofilePage> {
                             controller:
                                 myProfileController.nameController.value,
                             readOnly: !myProfileController.isEdited.value,
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -205,11 +212,7 @@ class _MyprofilePageState extends State<MyprofilePage> {
                       Container(
                         padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                          color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(16),
                             topRight: Radius.circular(16),
@@ -218,9 +221,18 @@ class _MyprofilePageState extends State<MyprofilePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Icon(Icons.mail),
+                            Icon(
+                              Icons.mail,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                             SizedBox(width: 16),
-                            CustomText(text: "Email", size: 16),
+                            CustomText(
+                              text: "Email",
+                              size: 16,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                           ],
                         ),
                       ),
@@ -230,11 +242,7 @@ class _MyprofilePageState extends State<MyprofilePage> {
                           left: MediaQuery.of(context).size.width * 0.1,
                         ),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                          color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(16),
                             bottomRight: Radius.circular(16),
@@ -243,6 +251,10 @@ class _MyprofilePageState extends State<MyprofilePage> {
                         child: TextField(
                           controller: myProfileController.mailController.value,
                           readOnly: true,
+                          style: TextStyle(
+                            color:
+                                Theme.of(context).appBarTheme.foregroundColor,
+                          ),
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.transparent),
@@ -261,11 +273,7 @@ class _MyprofilePageState extends State<MyprofilePage> {
                       Container(
                         padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                          color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(16),
                             topRight: Radius.circular(16),
@@ -274,9 +282,18 @@ class _MyprofilePageState extends State<MyprofilePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Icon(Icons.phone),
+                            Icon(
+                              Icons.phone,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                             SizedBox(width: 16),
-                            CustomText(text: "Phone", size: 16),
+                            CustomText(
+                              text: "Phone",
+                              size: 16,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                           ],
                         ),
                       ),
@@ -286,11 +303,7 @@ class _MyprofilePageState extends State<MyprofilePage> {
                           left: MediaQuery.of(context).size.width * 0.1,
                         ),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                          color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(16),
                             bottomRight: Radius.circular(16),
@@ -301,8 +314,20 @@ class _MyprofilePageState extends State<MyprofilePage> {
                             controller:
                                 myProfileController.phoneController.value,
                             readOnly: !myProfileController.isEdited.value,
+                            cursorColor:
+                                Theme.of(context).appBarTheme.foregroundColor,
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                             decoration: InputDecoration(
                               hintText: "XXX-XXX-XXXX",
+                              hintStyle: TextStyle(
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).appBarTheme.foregroundColor,
+                              ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.transparent,

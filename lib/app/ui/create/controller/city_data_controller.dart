@@ -23,16 +23,38 @@ class CityDataController extends GetxController {
     required String state,
     required String country,
   }) async {
-    log('[loadDataCity]: loading...');
+    log('[loadDataCityWithCSC]: loading...');
     cityController.isLoadingCity.value = true;
-    log('[loadDataCityWithCSC city]: $city');
-    log('[loadDataCityWithCSC state]: $state');
-    log('[loadDataCityWithCSC country]: $country');
+    log('[CSC city]: $city');
+    log('[CSC state]: $state');
+    log('[CSC country]: $country');
     try {
       final result = await cityDataRepository.fetchDataWithCSC(
         city,
         state,
         country,
+      );
+      cityData.value = result;
+      log('[loadDataCity]: succeed');
+    } catch (e) {
+      log("Error: $e");
+    } finally {
+      cityController.isLoadingCity.value = false;
+    }
+  }
+
+  Future<void> loadDataCityWithLocation({
+    required String latitude,
+    required String longitude,
+  }) async {
+    log('[loadDataCityWithLocation]: loading...');
+    cityController.isLoadingCity.value = true;
+    log('[Location latitude]: $latitude');
+    log('[Location longitude]: $longitude');
+    try {
+      final result = await cityDataRepository.fetchDataWithLocation(
+        latitude,
+        longitude,
       );
       cityData.value = result;
       log('[loadDataCity]: succeed');

@@ -65,11 +65,7 @@ class _HomePageState extends State<ProfileScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(16),
                         topRight: Radius.circular(16),
@@ -80,45 +76,65 @@ class _HomePageState extends State<ProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.person),
+                            Icon(
+                              Icons.person,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                             SizedBox(width: 16),
-                            CustomText(text: "My Profile", size: 16),
+                            CustomText(
+                              text: "My Profile",
+                              size: 16,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                           ],
                         ),
-                        Icon(Icons.keyboard_arrow_right_outlined),
+                        Icon(
+                          Icons.keyboard_arrow_right_outlined,
+                          color: Theme.of(context).appBarTheme.foregroundColor,
+                        ),
                       ],
                     ),
                   ),
                 ),
                 SizedBox(height: 2),
-                InkWell(
-                  onTap: () {
-                    log("Settings");
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.person),
-                            SizedBox(width: 16),
-                            CustomText(text: "Settings", size: 16),
-                          ],
-                        ),
-                        Icon(Icons.keyboard_arrow_right_outlined),
-                      ],
-                    ),
-                  ),
-                ),
+                // InkWell(
+                //   onTap: () {
+                //     log("Settings");
+                //   },
+                //   child: Container(
+                //     padding: const EdgeInsets.all(16.0),
+                //     decoration: BoxDecoration(
+                //       color: Theme.of(context).primaryColor,
+                //     ),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       children: [
+                //         Row(
+                //           children: [
+                //             Icon(
+                //               Icons.person,
+                //               color:
+                //                   Theme.of(context).appBarTheme.foregroundColor,
+                //             ),
+                //             SizedBox(width: 16),
+                //             CustomText(
+                //               text: "Settings",
+                //               size: 16,
+                //               color:
+                //                   Theme.of(context).appBarTheme.foregroundColor,
+                //             ),
+                //           ],
+                //         ),
+                //         Icon(
+                //           Icons.keyboard_arrow_right_outlined,
+                //           color: Theme.of(context).appBarTheme.foregroundColor,
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 SizedBox(height: 2),
                 InkWell(
                   onTap: () {
@@ -128,11 +144,7 @@ class _HomePageState extends State<ProfileScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(16),
                         bottomRight: Radius.circular(16),
@@ -143,12 +155,24 @@ class _HomePageState extends State<ProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.person),
+                            Icon(
+                              Icons.person,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                             SizedBox(width: 16),
-                            CustomText(text: "Log out", size: 16),
+                            CustomText(
+                              text: "Log out",
+                              size: 16,
+                              color:
+                                  Theme.of(context).appBarTheme.foregroundColor,
+                            ),
                           ],
                         ),
-                        Icon(Icons.keyboard_arrow_right_outlined),
+                        Icon(
+                          Icons.keyboard_arrow_right_outlined,
+                          color: Theme.of(context).appBarTheme.foregroundColor,
+                        ),
                       ],
                     ),
                   ),

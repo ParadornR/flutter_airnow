@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/ui/create/screen/coord_screed.dart';
+import 'package:flutter_airnow/app/ui/create/screen/gps_screen.dart';
 import 'package:flutter_airnow/app/ui/create/screen/geo_screen.dart';
 
 
@@ -12,7 +12,7 @@ class CreatePage extends StatefulWidget {
 
 class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
   late final TabController _tabController;
-  final List<Widget> _body = [GeoScreen(), CoordScreed()];
+  final List<Widget> _body = [GeoScreen(), GpsScreen()];
 
   @override
   void initState() {

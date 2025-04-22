@@ -115,7 +115,7 @@ class GeoController extends GetxController {
         // Locatio ที่หาได้มีไหม?
         if (cityDocQuery.docs.isEmpty) {
           // ไม่มี สร้างใหม่
-
+          
           await cityDocRef.set({
             'city': value.city,
             'state': value.state,
@@ -147,41 +147,7 @@ class GeoController extends GetxController {
             'created_at': DateTime.now(),
           });
           await homeScreenController.fetchUserData();
-          // final pollutionRef = cityDocRef.collection('pollution');
-          // final pollutionQuery =
-          //     await pollutionRef.where('ts', isEqualTo: pollution.ts).get();
-          // log("[pollution.ts]:${pollution.ts}");
-          // if (pollutionQuery.docs.isEmpty) {
-          //   await pollutionRef.add({
-          //     'aqicn': pollution.aqicn,
-          //     'aqius': pollution.aqius,
-          //     'maincn': pollution.maincn,
-          //     'mainus': pollution.mainus,
-          //     'ts': pollution.ts,
-          //     'created_at': DateTime.now(),
-          //   });
-          // } else {
-          //   log('ข้อมูล pollution ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
-          // }
-
-          // final weatherRef = cityDocRef.collection('weather');
-          // final weatherQuery =
-          //     await weatherRef.where('ts', isEqualTo: weather.ts).get();
-          // log("[weather.ts]:${weather.ts}");
-          // if (weatherQuery.docs.isEmpty) {
-          //   await weatherRef.add({
-          //     'hu': weather.hu,
-          //     'ic': weather.ic,
-          //     'pr': weather.pr,
-          //     'tp': weather.tp,
-          //     'wd': weather.wd,
-          //     'ws': weather.ws,
-          //     'ts': weather.ts,
-          //     'created_at': DateTime.now(),
-          //   });
-          // } else {
-          //   log('ข้อมูล weather ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
-          // }
+         
         } else {
           log('มีข้อมูล location นี้แล้ว');
           canSave.value = false;

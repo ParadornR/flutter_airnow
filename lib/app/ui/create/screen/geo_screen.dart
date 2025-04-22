@@ -302,125 +302,8 @@ class _GeoScreenState extends State<GeoScreen> {
                     ),
                   );
                 }),
-                ElevatedButton(
-                  onPressed: () {
-                    geoController.loadAndSave();
-                    log("canSave.value:${geoController.canSave.value}");
-                  },
-                  child: Text("test load"),
-                ),
               ],
             ),
-            //use load data from api
-            // ElevatedButton(
-            //   onPressed: () {
-            //     if (geoController.selectedCountryValue.value!.isNotEmpty &&
-            //         geoController.selectedStateValue.value!.isNotEmpty &&
-            //         geoController.selectedCityValue.value!.isNotEmpty) {
-            //       cityDataController.loadDataCityWithCSC(
-            //         country: geoController.selectedCountryValue.value!,
-            //         state: geoController.selectedStateValue.value!,
-            //         city: geoController.selectedCityValue.value!,
-            //       );
-            //     }
-            //   },
-            //   child: Text("Serch"),
-            // ),
-            //use show data
-            // ElevatedButton(
-            //   onPressed: () {
-            //     final value = cityDataController.cityData.value!.data;
-            //     final pollution =
-            //         cityDataController.cityData.value!.data.current.pollution;
-            //     final weather =
-            //         cityDataController.cityData.value!.data.current.weather;
-            //     log("city: ${value.city}");
-            //     log("state: ${value.state}");
-            //     log("country: ${value.country}");
-            //     log("coordinates: ${value.location.coordinates}");
-            //     log("pollution ts: ${pollution.ts}");
-            //     log("pollution aqicn: ${pollution.aqicn}");
-            //     log("pollution maincn: ${pollution.maincn}");
-            //     log("pollution aqius: ${pollution.aqius}");
-            //     log("pollution mainus: ${pollution.mainus}");
-            //     log("weather ts: ${weather.ts}");
-            //     log("weather tp: ${weather.tp}");
-            //     log("weather pr: ${weather.pr}");
-            //     log("weather hu: ${weather.hu}");
-            //     log("weather ws: ${weather.ws}");
-            //     log("weather wd: ${weather.wd}");
-            //     log("weather ic: ${weather.ic}");
-            //   },
-            //   child: Text("Test"),
-            // ),
-            //use update
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     final value = cityDataController.cityData.value!.data;
-            //     final pollution =
-            //         cityDataController.cityData.value!.data.current.pollution;
-            //     final weather =
-            //         cityDataController.cityData.value!.data.current.weather;
-            //     try {
-            //       final userId = userProvider.userId.value;
-            //       final locationRef = FirebaseFirestore.instance
-            //           .collection('users')
-            //           .doc(userId)
-            //           .collection('location');
-
-            //       // 1. บันทึกข้อมูล location
-            //       final cityDocRef = locationRef.doc(value.city);
-            //       await cityDocRef.set({
-            //         'city': value.city,
-            //         'state': value.state,
-            //         'country': value.country,
-            //         'location': value.location.coordinates,
-            //         'last_update_at': DateTime.now(),
-            //       });
-
-            //       final pollutionRef = cityDocRef.collection('pollution');
-            //       final pollutionQuery =
-            //           await pollutionRef
-            //               .where('ts', isEqualTo: pollution.ts)
-            //               .get();
-            //       log("[pollution.ts]:${pollution.ts}");
-            //       if (pollutionQuery.docs.isEmpty) {
-            //         await pollutionRef.add({
-            //           'aqicn': pollution.aqicn,
-            //           'aqius': pollution.aqius,
-            //           'maincn': pollution.maincn,
-            //           'mainus': pollution.mainus,
-            //           'ts': pollution.ts,
-            //           'created_at': DateTime.now(),
-            //         });
-            //       } else {
-            //         log('ข้อมูล pollution ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
-            //       }
-
-            //       final weatherRef = cityDocRef.collection('weather');
-            //       final weatherQuery =
-            //           await weatherRef.where('ts', isEqualTo: weather.ts).get();
-            //       log("[weather.ts]:${weather.ts}");
-            //       if (weatherQuery.docs.isEmpty) {
-            //         await weatherRef.add({
-            //           'hu': weather.hu,
-            //           'ic': weather.ic,
-            //           'pr': weather.pr,
-            //           'tp': weather.tp,
-            //           'wd': weather.wd,
-            //           'ws': weather.ws,
-            //           'ts': weather.ts,
-            //           'created_at': DateTime.now(),
-            //         });
-            //       } else {
-            //         log('ข้อมูล weather ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
-            //       }
-            //     } catch (e, stackTrace) {
-            //       log('เกิดข้อผิดพลาดในการบันทึกข้อมูล: $e\n$stackTrace');
-            //     }
-            //   },
-            //   child: Text("add"),
-            // ),
             Obx(
               () => Visibility(
                 visible: geoController.isAllNotEmpty.value,
@@ -441,12 +324,13 @@ class _GeoScreenState extends State<GeoScreen> {
                         await Future.delayed(const Duration(seconds: 3));
                       } else {
                         controller.success();
-                        await Future.delayed(const Duration(seconds: 3));
+                        await Future.delayed(const Duration(seconds: 1));
+                        Get.back();
                       }
                       controller.reset(); //resets the slider
                     },
                     child: CustomText(
-                      text: 'Slide to Confirm',
+                      text: 'Slide to Save Location',
                       size: 14,
                       color: Theme.of(context).appBarTheme.foregroundColor,
                     ),
