@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marquee/marquee.dart';
@@ -39,7 +37,6 @@ class TextWithOverflowCheck extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isOverflow = isTextOverflow(text, style, constraints.maxWidth);
-        log("isOverflow:$isOverflow");
         return isOverflow
             ? Row(
               children: [
