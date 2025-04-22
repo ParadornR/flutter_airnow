@@ -18,13 +18,13 @@ class CustomText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: GoogleFonts.prompt(
         fontSize: size,
         fontWeight: weight,
         color: color,
       ),
-      // TextStyle(fontSize: size, fontWeight: weight, color: color),
-      // overflow: TextOverflow.ellipsis,
     );
   }
 }

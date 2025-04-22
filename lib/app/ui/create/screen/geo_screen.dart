@@ -35,399 +35,423 @@ class _GeoScreenState extends State<GeoScreen> {
     return SafeArea(
       child: Scaffold(
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Obx(() {
-              if (countryController.isLoading.value) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return Container(
-                margin: EdgeInsets.all(8),
-                padding: EdgeInsets.all(8),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2<String>(
-                    isExpanded: true,
-                    hint: Text(
-                      'Select Country',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
+            Column(
+              children: [
+                Obx(() {
+                  if (countryController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return Container(
+                    margin: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    items:
-                        countryController.countries
-                            .map(
-                              (item) => DropdownMenuItem(
-                                value: item.country,
-                                child: Text(
-                                  item.country,
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                    value: geoController.selectedCountryValue.value,
-                    onChanged: (value) => geoController.onChangedCountry(value),
-                    buttonStyleData: const ButtonStyleData(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      height: 40,
-                      width: 200,
-                    ),
-                    dropdownStyleData: DropdownStyleData(
-                      maxHeight: MediaQuery.of(context).size.height * 0.5,
-                    ),
-                    menuItemStyleData: const MenuItemStyleData(height: 40),
-                    dropdownSearchData: DropdownSearchData(
-                      searchController: geoController.countryTextEditing,
-                      searchInnerWidgetHeight: 50,
-                      searchInnerWidget: Container(
-                        height: 50,
-                        padding: const EdgeInsets.only(
-                          top: 8,
-                          bottom: 4,
-                          right: 8,
-                          left: 8,
-                        ),
-                        child: TextFormField(
-                          expands: true,
-                          maxLines: null,
-                          controller: geoController.countryTextEditing,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 8,
-                            ),
-                            hintText: 'Search for Country',
-                            hintStyle: const TextStyle(fontSize: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2<String>(
+                        isExpanded: true,
+                        hint: Text(
+                          'Select Country',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).hintColor,
                           ),
                         ),
-                      ),
-                      searchMatchFn: (item, searchValue) {
-                        return item.value.toString().toLowerCase().contains(
-                          searchValue.toLowerCase(),
-                        );
-                      },
-                    ),
-                    onMenuStateChange:
-                        (isOpen) =>
-                            geoController.onMenuStateChangeCountry(isOpen),
-                  ),
-                ),
-              );
-            }),
-            Obx(() {
-              if (stateController.isLoadingState.value) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return Container(
-                margin: EdgeInsets.all(8),
-                padding: EdgeInsets.all(8),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2<String>(
-                    isExpanded: true,
-                    hint: Text(
-                      'Select State',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    items:
-                        stateController.states
-                            .map(
-                              (item) => DropdownMenuItem(
-                                value: item,
-                                child: Text(
-                                  item,
-                                  style: const TextStyle(fontSize: 14),
+                        items:
+                            countryController.countries
+                                .map(
+                                  (item) => DropdownMenuItem(
+                                    value: item.country,
+                                    child: Text(
+                                      item.country,
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                        value: geoController.selectedCountryValue.value,
+                        onChanged:
+                            (value) => geoController.onChangedCountry(value),
+                        buttonStyleData: const ButtonStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          height: 40,
+                          width: 200,
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          maxHeight: MediaQuery.of(context).size.height * 0.5,
+                        ),
+                        menuItemStyleData: const MenuItemStyleData(height: 40),
+                        dropdownSearchData: DropdownSearchData(
+                          searchController: geoController.countryTextEditing,
+                          searchInnerWidgetHeight: 50,
+                          searchInnerWidget: Container(
+                            height: 50,
+                            padding: const EdgeInsets.only(
+                              top: 8,
+                              bottom: 4,
+                              right: 8,
+                              left: 8,
+                            ),
+                            child: TextFormField(
+                              expands: true,
+                              maxLines: null,
+                              controller: geoController.countryTextEditing,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 8,
+                                ),
+                                hintText: 'Search for Country',
+                                hintStyle: const TextStyle(fontSize: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                            )
-                            .toList(),
-                    value: geoController.selectedStateValue.value,
-                    onChanged: (value) => geoController.onChangedState(value),
-                    buttonStyleData: const ButtonStyleData(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      height: 40,
-                      width: 200,
-                    ),
-                    dropdownStyleData: DropdownStyleData(
-                      maxHeight: MediaQuery.of(context).size.height * 0.5,
-                    ),
-                    menuItemStyleData: const MenuItemStyleData(height: 40),
-                    dropdownSearchData: DropdownSearchData(
-                      searchController: geoController.stateTextEditing,
-                      searchInnerWidgetHeight: 50,
-                      searchInnerWidget: Container(
-                        height: 50,
-                        padding: const EdgeInsets.only(
-                          top: 8,
-                          bottom: 4,
-                          right: 8,
-                          left: 8,
-                        ),
-                        child: TextFormField(
-                          expands: true,
-                          maxLines: null,
-                          controller: geoController.stateTextEditing,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 8,
-                            ),
-                            hintText: 'Search for Country',
-                            hintStyle: const TextStyle(fontSize: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
+                          searchMatchFn: (item, searchValue) {
+                            return item.value.toString().toLowerCase().contains(
+                              searchValue.toLowerCase(),
+                            );
+                          },
                         ),
-                      ),
-                      searchMatchFn: (item, searchValue) {
-                        return item.value.toString().toLowerCase().contains(
-                          searchValue.toLowerCase(),
-                        );
-                      },
-                    ),
-                    onMenuStateChange:
-                        (isOpen) =>
-                            geoController.onMenuStateChangeState(isOpen),
-                  ),
-                ),
-              );
-            }),
-            Obx(() {
-              if (cityController.isLoadingCity.value) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return Container(
-                margin: EdgeInsets.all(8),
-                padding: EdgeInsets.all(8),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2<String>(
-                    isExpanded: true,
-                    hint: Text(
-                      'Select City',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
+                        onMenuStateChange:
+                            (isOpen) =>
+                                geoController.onMenuStateChangeCountry(isOpen),
                       ),
                     ),
-                    items:
-                        cityController.city.value?.data
-                            .map(
-                              (item) => DropdownMenuItem(
-                                value: item.city,
-                                child: Text(
-                                  item.city,
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                    value: geoController.selectedCityValue.value,
-                    onChanged: (value) => geoController.onChangedCity(value),
-                    buttonStyleData: const ButtonStyleData(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      height: 40,
-                      width: 200,
-                    ),
-                    dropdownStyleData: DropdownStyleData(
-                      maxHeight: MediaQuery.of(context).size.height * 0.5,
-                    ),
-                    menuItemStyleData: const MenuItemStyleData(height: 40),
-                    dropdownSearchData: DropdownSearchData(
-                      searchController: geoController.stateTextEditing,
-                      searchInnerWidgetHeight: 50,
-                      searchInnerWidget: Container(
-                        height: 50,
-                        padding: const EdgeInsets.only(
-                          top: 8,
-                          bottom: 4,
-                          right: 8,
-                          left: 8,
-                        ),
-                        child: TextFormField(
-                          expands: true,
-                          maxLines: null,
-                          controller: geoController.stateTextEditing,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 8,
-                            ),
-                            hintText: 'Search for City',
-                            hintStyle: const TextStyle(fontSize: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ),
-                      searchMatchFn: (item, searchValue) {
-                        return item.value.toString().toLowerCase().contains(
-                          searchValue.toLowerCase(),
-                        );
-                      },
-                    ),
-                    onMenuStateChange:
-                        (isOpen) => geoController.onMenuStateChangeCity(isOpen),
-                  ),
-                ),
-              );
-            }),
-            //use load data from api
-            ElevatedButton(
-              onPressed: () {
-                if (geoController.selectedCountryValue.value!.isNotEmpty &&
-                    geoController.selectedStateValue.value!.isNotEmpty &&
-                    geoController.selectedCityValue.value!.isNotEmpty) {
-                  cityDataController.loadDataCityWithCSC(
-                    country: geoController.selectedCountryValue.value!,
-                    state: geoController.selectedStateValue.value!,
-                    city: geoController.selectedCityValue.value!,
                   );
-                }
-              },
-              child: Text("Serch"),
+                }),
+                Obx(() {
+                  if (stateController.isLoadingState.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return Container(
+                    margin: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2<String>(
+                        isExpanded: true,
+                        hint: Text(
+                          'Select State',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).hintColor,
+                          ),
+                        ),
+                        items:
+                            stateController.states
+                                .map(
+                                  (item) => DropdownMenuItem(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                        value: geoController.selectedStateValue.value,
+                        onChanged:
+                            (value) => geoController.onChangedState(value),
+                        buttonStyleData: const ButtonStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          height: 40,
+                          width: 200,
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          maxHeight: MediaQuery.of(context).size.height * 0.5,
+                        ),
+                        menuItemStyleData: const MenuItemStyleData(height: 40),
+                        dropdownSearchData: DropdownSearchData(
+                          searchController: geoController.stateTextEditing,
+                          searchInnerWidgetHeight: 50,
+                          searchInnerWidget: Container(
+                            height: 50,
+                            padding: const EdgeInsets.only(
+                              top: 8,
+                              bottom: 4,
+                              right: 8,
+                              left: 8,
+                            ),
+                            child: TextFormField(
+                              expands: true,
+                              maxLines: null,
+                              controller: geoController.stateTextEditing,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 8,
+                                ),
+                                hintText: 'Search for Country',
+                                hintStyle: const TextStyle(fontSize: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                          searchMatchFn: (item, searchValue) {
+                            return item.value.toString().toLowerCase().contains(
+                              searchValue.toLowerCase(),
+                            );
+                          },
+                        ),
+                        onMenuStateChange:
+                            (isOpen) =>
+                                geoController.onMenuStateChangeState(isOpen),
+                      ),
+                    ),
+                  );
+                }),
+                Obx(() {
+                  if (cityController.isLoadingCity.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return Container(
+                    margin: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2<String>(
+                        isExpanded: true,
+                        hint: Text(
+                          'Select City',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).hintColor,
+                          ),
+                        ),
+                        items:
+                            cityController.city.value?.data
+                                .map(
+                                  (item) => DropdownMenuItem(
+                                    value: item.city,
+                                    child: Text(
+                                      item.city,
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                        value: geoController.selectedCityValue.value,
+                        onChanged:
+                            (value) => geoController.onChangedCity(value),
+                        buttonStyleData: const ButtonStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          height: 40,
+                          width: 200,
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          maxHeight: MediaQuery.of(context).size.height * 0.5,
+                        ),
+                        menuItemStyleData: const MenuItemStyleData(height: 40),
+                        dropdownSearchData: DropdownSearchData(
+                          searchController: geoController.stateTextEditing,
+                          searchInnerWidgetHeight: 50,
+                          searchInnerWidget: Container(
+                            height: 50,
+                            padding: const EdgeInsets.only(
+                              top: 8,
+                              bottom: 4,
+                              right: 8,
+                              left: 8,
+                            ),
+                            child: TextFormField(
+                              expands: true,
+                              maxLines: null,
+                              controller: geoController.stateTextEditing,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 8,
+                                ),
+                                hintText: 'Search for City',
+                                hintStyle: const TextStyle(fontSize: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                          searchMatchFn: (item, searchValue) {
+                            return item.value.toString().toLowerCase().contains(
+                              searchValue.toLowerCase(),
+                            );
+                          },
+                        ),
+                        onMenuStateChange:
+                            (isOpen) =>
+                                geoController.onMenuStateChangeCity(isOpen),
+                      ),
+                    ),
+                  );
+                }),
+                ElevatedButton(
+                  onPressed: () {
+                    geoController.loadAndSave();
+                    log("canSave.value:${geoController.canSave.value}");
+                  },
+                  child: Text("test load"),
+                ),
+              ],
             ),
+            //use load data from api
+            // ElevatedButton(
+            //   onPressed: () {
+            //     if (geoController.selectedCountryValue.value!.isNotEmpty &&
+            //         geoController.selectedStateValue.value!.isNotEmpty &&
+            //         geoController.selectedCityValue.value!.isNotEmpty) {
+            //       cityDataController.loadDataCityWithCSC(
+            //         country: geoController.selectedCountryValue.value!,
+            //         state: geoController.selectedStateValue.value!,
+            //         city: geoController.selectedCityValue.value!,
+            //       );
+            //     }
+            //   },
+            //   child: Text("Serch"),
+            // ),
             //use show data
-            ElevatedButton(
-              onPressed: () {
-                final value = cityDataController.cityData.value!.data;
-                final pollution =
-                    cityDataController.cityData.value!.data.current.pollution;
-                final weather =
-                    cityDataController.cityData.value!.data.current.weather;
-                log("city: ${value.city}");
-                log("state: ${value.state}");
-                log("country: ${value.country}");
-                log("coordinates: ${value.location.coordinates}");
-                log("pollution ts: ${pollution.ts}");
-                log("pollution aqicn: ${pollution.aqicn}");
-                log("pollution maincn: ${pollution.maincn}");
-                log("pollution aqius: ${pollution.aqius}");
-                log("pollution mainus: ${pollution.mainus}");
-                log("weather ts: ${weather.ts}");
-                log("weather tp: ${weather.tp}");
-                log("weather pr: ${weather.pr}");
-                log("weather hu: ${weather.hu}");
-                log("weather ws: ${weather.ws}");
-                log("weather wd: ${weather.wd}");
-                log("weather ic: ${weather.ic}");
-              },
-              child: Text("Test"),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     final value = cityDataController.cityData.value!.data;
+            //     final pollution =
+            //         cityDataController.cityData.value!.data.current.pollution;
+            //     final weather =
+            //         cityDataController.cityData.value!.data.current.weather;
+            //     log("city: ${value.city}");
+            //     log("state: ${value.state}");
+            //     log("country: ${value.country}");
+            //     log("coordinates: ${value.location.coordinates}");
+            //     log("pollution ts: ${pollution.ts}");
+            //     log("pollution aqicn: ${pollution.aqicn}");
+            //     log("pollution maincn: ${pollution.maincn}");
+            //     log("pollution aqius: ${pollution.aqius}");
+            //     log("pollution mainus: ${pollution.mainus}");
+            //     log("weather ts: ${weather.ts}");
+            //     log("weather tp: ${weather.tp}");
+            //     log("weather pr: ${weather.pr}");
+            //     log("weather hu: ${weather.hu}");
+            //     log("weather ws: ${weather.ws}");
+            //     log("weather wd: ${weather.wd}");
+            //     log("weather ic: ${weather.ic}");
+            //   },
+            //   child: Text("Test"),
+            // ),
             //use update
-            ElevatedButton(
-              onPressed: () async {
-                final value = cityDataController.cityData.value!.data;
-                final pollution =
-                    cityDataController.cityData.value!.data.current.pollution;
-                final weather =
-                    cityDataController.cityData.value!.data.current.weather;
-                try {
-                  final userId = userProvider.userId.value;
-                  final locationRef = FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(userId)
-                      .collection('location');
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     final value = cityDataController.cityData.value!.data;
+            //     final pollution =
+            //         cityDataController.cityData.value!.data.current.pollution;
+            //     final weather =
+            //         cityDataController.cityData.value!.data.current.weather;
+            //     try {
+            //       final userId = userProvider.userId.value;
+            //       final locationRef = FirebaseFirestore.instance
+            //           .collection('users')
+            //           .doc(userId)
+            //           .collection('location');
 
-                  // 1. บันทึกข้อมูล location
-                  final cityDocRef = locationRef.doc(value.city);
-                  await cityDocRef.set({
-                    'city': value.city,
-                    'state': value.state,
-                    'country': value.country,
-                    'location': value.location.coordinates,
-                    'last_update_at': DateTime.now(),
-                  });
+            //       // 1. บันทึกข้อมูล location
+            //       final cityDocRef = locationRef.doc(value.city);
+            //       await cityDocRef.set({
+            //         'city': value.city,
+            //         'state': value.state,
+            //         'country': value.country,
+            //         'location': value.location.coordinates,
+            //         'last_update_at': DateTime.now(),
+            //       });
 
-                  final pollutionRef = cityDocRef.collection('pollution');
-                  final pollutionQuery =
-                      await pollutionRef
-                          .where('ts', isEqualTo: pollution.ts)
-                          .get();
-                  log("[pollution.ts]:${pollution.ts}");
-                  if (pollutionQuery.docs.isEmpty) {
-                    await pollutionRef.add({
-                      'aqicn': pollution.aqicn,
-                      'aqius': pollution.aqius,
-                      'maincn': pollution.maincn,
-                      'mainus': pollution.mainus,
-                      'ts': pollution.ts,
-                      'created_at': DateTime.now(),
-                    });
-                  } else {
-                    log('ข้อมูล pollution ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
-                  }
+            //       final pollutionRef = cityDocRef.collection('pollution');
+            //       final pollutionQuery =
+            //           await pollutionRef
+            //               .where('ts', isEqualTo: pollution.ts)
+            //               .get();
+            //       log("[pollution.ts]:${pollution.ts}");
+            //       if (pollutionQuery.docs.isEmpty) {
+            //         await pollutionRef.add({
+            //           'aqicn': pollution.aqicn,
+            //           'aqius': pollution.aqius,
+            //           'maincn': pollution.maincn,
+            //           'mainus': pollution.mainus,
+            //           'ts': pollution.ts,
+            //           'created_at': DateTime.now(),
+            //         });
+            //       } else {
+            //         log('ข้อมูล pollution ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
+            //       }
 
-                  final weatherRef = cityDocRef.collection('weather');
-                  final weatherQuery =
-                      await weatherRef.where('ts', isEqualTo: weather.ts).get();
-                  log("[weather.ts]:${weather.ts}");
-                  if (weatherQuery.docs.isEmpty) {
-                    await weatherRef.add({
-                      'hu': weather.hu,
-                      'ic': weather.ic,
-                      'pr': weather.pr,
-                      'tp': weather.tp,
-                      'wd': weather.wd,
-                      'ws': weather.ws,
-                      'ts': weather.ts,
-                      'created_at': DateTime.now(),
-                    });
-                  } else {
-                    log('ข้อมูล weather ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
-                  }
-                } catch (e, stackTrace) {
-                  log('เกิดข้อผิดพลาดในการบันทึกข้อมูล: $e\n$stackTrace');
-                }
-              },
-              child: Text("add"),
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ActionSlider.standard(
-                sliderBehavior: SliderBehavior.stretch,
-                width: 300.0,
-                backgroundColor: Theme.of(context).primaryColor,
-                toggleColor: Theme.of(context).appBarTheme.foregroundColor,
-                action: (controller) async {
-                  controller.loading(); //starts loading animation
-                  await Future.delayed(const Duration(seconds: 3));
-                  controller.failure(); //starts loading animation
-                  await Future.delayed(const Duration(seconds: 3));
-                  controller.success(); //starts success animation
-                  await Future.delayed(const Duration(seconds: 1));
-                  controller.reset(); //resets the slider
-                },
-                child: CustomText(
-                  text: 'Slide to confirm',
-                  size: 14,
-                  color: Theme.of(context).appBarTheme.foregroundColor,
+            //       final weatherRef = cityDocRef.collection('weather');
+            //       final weatherQuery =
+            //           await weatherRef.where('ts', isEqualTo: weather.ts).get();
+            //       log("[weather.ts]:${weather.ts}");
+            //       if (weatherQuery.docs.isEmpty) {
+            //         await weatherRef.add({
+            //           'hu': weather.hu,
+            //           'ic': weather.ic,
+            //           'pr': weather.pr,
+            //           'tp': weather.tp,
+            //           'wd': weather.wd,
+            //           'ws': weather.ws,
+            //           'ts': weather.ts,
+            //           'created_at': DateTime.now(),
+            //         });
+            //       } else {
+            //         log('ข้อมูล weather ซ้ำอยู่แล้ว ไม่เพิ่มใหม่');
+            //       }
+            //     } catch (e, stackTrace) {
+            //       log('เกิดข้อผิดพลาดในการบันทึกข้อมูล: $e\n$stackTrace');
+            //     }
+            //   },
+            //   child: Text("add"),
+            // ),
+            Obx(
+              () => Visibility(
+                visible: geoController.isAllNotEmpty.value,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ActionSlider.standard(
+                    sliderBehavior: SliderBehavior.stretch,
+                    width: double.infinity,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    toggleColor: Theme.of(context).appBarTheme.foregroundColor,
+                    action: (controller) async {
+                      controller.loading(); //starts loading animation
+                      await Future.delayed(const Duration(seconds: 1));
+                      geoController.loadAndSave();
+                      log("canSave:${geoController.canSave.value}");
+                      if (geoController.canSave.value == false) {
+                        controller.failure();
+                        await Future.delayed(const Duration(seconds: 3));
+                      } else {
+                        controller.success();
+                        await Future.delayed(const Duration(seconds: 3));
+                      }
+                      controller.reset(); //resets the slider
+                    },
+                    child: CustomText(
+                      text: 'Slide to Confirm',
+                      size: 14,
+                      color: Theme.of(context).appBarTheme.foregroundColor,
+                    ),
+                  ),
                 ),
               ),
             ),

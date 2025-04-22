@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/UI/widget/custom_text.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
@@ -88,78 +87,59 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 child: Column(
                   children: [
-                    IntrinsicHeight(
-                      child: Stack(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: Row(
-                                    textBaseline: TextBaseline.alphabetic,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.baseline,
-                                    children: [
-                                      CustomText(
-                                        text: temperature,
-                                        size:
-                                            MediaQuery.of(context).size.width *
-                                            0.15,
-                                        color:
-                                            Theme.of(
-                                              context,
-                                            ).appBarTheme.foregroundColor,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Lottie.asset(
-                                  homeScreenController.getWeatherLottie(
-                                    condition,
-                                  ),
-                                  fit: BoxFit.cover,
-                                  decoder: LottieComposition.decodeGZip,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 28),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Center(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              textBaseline: TextBaseline.alphabetic,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
                               children: [
-                                SizedBox(),
                                 CustomText(
-                                  text: "Temperature",
-                                  size: 16,
+                                  text: temperature,
+                                  size:
+                                      MediaQuery.of(context).size.width * 0.15,
                                   color:
                                       Theme.of(
                                         context,
                                       ).appBarTheme.foregroundColor,
                                 ),
-                                Center(child: SizedBox()),
-                                CustomText(
-                                  text: homeScreenController
-                                      .getWeatherDescription(condition),
-                                  size: 14,
-                                  color:
-                                      Theme.of(
-                                        context,
-                                      ).appBarTheme.foregroundColor,
-                                ),
-                                SizedBox(),
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        Expanded(
+                          child: Lottie.asset(
+                            homeScreenController.getWeatherLottie(condition),
+                            fit: BoxFit.cover,
+                            decoder: LottieComposition.decodeGZip,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        CustomText(
+                          text: "Temperature",
+                          size: 16,
+                          color: Theme.of(context).appBarTheme.foregroundColor,
+                        ),
+                        SizedBox(),
+                        CustomText(
+                          text: homeScreenController.getWeatherDescription(
+                            condition,
+                          ),
+                          size: 14,
+                          color: Theme.of(context).appBarTheme.foregroundColor,
+                        ),
+                        SizedBox(),
+                      ],
+                    ),
+                    SizedBox(height: 16),
                     Center(
                       child: CustomText(
                         text: cityName,
@@ -189,56 +169,6 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                   ],
                 ),
-
-                // Column(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Row(
-                //       mainAxisAlignment: MainAxisAlignment.end,
-                //       children: [
-                //         Padding(
-                //           padding: const EdgeInsets.symmetric(horizontal: 8),
-                //           child: CustomText(
-                //             text: "Stete, Country",
-                //             size: 18,
-                //             color: Colors.transparent,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //     Row(
-                //       children: [
-                //         Container(
-                //           padding: const EdgeInsets.all(8.0),
-                //           width: MediaQuery.of(context).size.width * 0.4,
-                //           decoration: BoxDecoration(
-                //             color: Theme.of(context).appBarTheme.foregroundColor,
-                //             borderRadius: BorderRadius.only(
-                //               topRight: Radius.circular(32),
-                //               bottomRight: Radius.circular(32),
-                //             ),
-                //           ),
-                //           child: Center(
-                //             child: CustomText(text: "City", size: 24),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //     Row(
-                //       mainAxisAlignment: MainAxisAlignment.end,
-                //       children: [
-                //         Padding(
-                //           padding: const EdgeInsets.symmetric(horizontal: 16),
-                //           child: CustomText(
-                //             text: "Stete, Country",
-                //             size: 18,
-                //             color: Theme.of(context).appBarTheme.foregroundColor,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ],
-                // ),
               ),
               Spacer(),
               Padding(
@@ -390,6 +320,7 @@ class _DetailPageState extends State<DetailPage> {
                       SizedBox(height: 16),
                       Wrap(
                         direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
                         children: [
                           Container(
                             padding: EdgeInsets.symmetric(

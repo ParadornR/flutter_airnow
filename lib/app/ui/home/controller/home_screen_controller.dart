@@ -125,6 +125,6 @@ class HomeScreenController extends GetxController {
       '50d': 'assets/lottie/overcast-fog.json',
     };
 
-    return lottieMap[name] ?? 'unknown';
+    return lottieMap[name] ?? 'assets/lottie/thunderstorms-overcast-rain.json';
   }
 }

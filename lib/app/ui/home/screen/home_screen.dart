@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/UI/widget/custom_text.dart';
 import 'package:flutter_airnow/app/ui/detail/detail_page.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
+import 'package:flutter_airnow/app/ui/widget/custom_text_marquee.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
@@ -91,38 +92,34 @@ class _HomeScreenState extends State<HomeScreen> {
     required String condition,
     required String aqi,
   }) {
-    return IntrinsicHeight(
-      //ปรับความสูงของลูกให้เท่ากันตาม content ที่สูงสุด
-      child: Container(
-        width: double.infinity,
-        // height: MediaQuery.of(context).size.width * 0.35,
-        decoration: BoxDecoration(
-          border: Border.all(),
-          // gradient: LinearGradient(
-          //   colors: [Color(0xFFA3E4FA), Color(0xFFD1F8EF)],
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          // ),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
+    return Container(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.width * 0.35,
+      decoration: BoxDecoration(
+        border: Border.all(),
+
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 7,
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(
+                            TextWithOverflowCheck(
                               text: city,
                               size: 28,
                               weight: FontWeight.bold,
@@ -153,43 +150,34 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        Stack(
-                          alignment: AlignmentDirectional.center,
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Column(
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              height: MediaQuery.of(context).size.width * 0.25,
-                              child: Lottie.asset(
-                                homeScreenController.getWeatherLottie(
-                                  condition,
-                                ),
-                                fit: BoxFit.cover,
-                                decoder: LottieComposition.decodeGZip,
-                              ),
+                            Lottie.asset(
+                              homeScreenController.getWeatherLottie(condition),
+                              fit: BoxFit.cover,
+                              decoder: LottieComposition.decodeGZip,
                             ),
-                            Container(
-                              height: MediaQuery.of(context).size.width * 0.25,
-                              alignment: AlignmentDirectional.bottomCenter,
-                              child: Text(
-                                homeScreenController.getWeatherDescription(
-                                  condition,
-                                ),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                            TextWithOverflowCheck(
+                              text: homeScreenController.getWeatherDescription(
+                                condition,
                               ),
+                              size: 14,
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(16.0),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.orange.shade100,
@@ -204,8 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
