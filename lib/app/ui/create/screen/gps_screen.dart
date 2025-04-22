@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/UI/widget/custom_text.dart';
-import 'package:flutter_airnow/app/ui/create/controller/gps_controller.dart';
+import 'package:flutter_airnow/app/ui/create/controller/gps_screen_controller.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
 
@@ -12,12 +13,7 @@ class GpsScreen extends StatefulWidget {
 }
 
 class _GpsScreenState extends State<GpsScreen> {
-  final gpsController = Get.put(GpsController());
-  bool havelocation = false;
-
-  final controller = MapController.withPosition(
-    initPosition: GeoPoint(latitude: 47.4358055, longitude: 8.4737324),
-  );
+  final gpsController = Get.find<GpsScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,105 +21,78 @@ class _GpsScreenState extends State<GpsScreen> {
       child: Scaffold(
         body: Obx(() {
           return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      gpsController.showCurrentLocation();
-                      gpsController.loadData();
-                    },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (gpsController.latitude.value != null ||
+                    gpsController.longitude.value != null) ...[
+                  Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.near_me,
-                            color:
-                                Theme.of(context).appBarTheme.foregroundColor,
+                      padding: EdgeInsets.only(bottom: 8, left: 8, right: 8),
+                      width: MediaQuery.of(context).size.width,
+                      child: OSMFlutter(
+                        controller: gpsController.controller,
+                        mapIsLoading: Scaffold(
+                          body: Center(child: CircularProgressIndicator()),
+                        ),
+                        onMapIsReady: (p0) {
+                          log('$p0');
+                          gpsController.canSave.value = p0;
+                        },
+                        osmOption: OSMOption(
+                          userTrackingOption: UserTrackingOption(
+                            enableTracking: true,
+                            unFollowUser: false,
                           ),
-                          SizedBox(width: 8),
-                          CustomText(
-                            text: "Current Location",
-                            color:
-                                Theme.of(context).appBarTheme.foregroundColor,
-                            size: 14,
+                          zoomOption: ZoomOption(
+                            initZoom: 17,
+                            minZoomLevel: 3,
+                            maxZoomLevel: 19,
+                            stepZoom: 1.0,
                           ),
-                        ],
+                          userLocationMarker: UserLocationMaker(
+                            personMarker: MarkerIcon(
+                              icon: Icon(
+                                Icons.place,
+                                color: const Color.fromARGB(255, 255, 0, 0),
+                                size: 100,
+                              ),
+                            ),
+                            directionArrowMarker: MarkerIcon(
+                              icon: Icon(Icons.double_arrow, size: 48),
+                            ),
+                          ),
+                          roadConfiguration: RoadOption(
+                            roadColor: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 8),
-                  gpsController.latitude.value != null
-                      ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("latitude"),
-                              Text("longitude"),
-                              Text("Country"),
-                              Text("State"),
-                              Text("City"),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text("${gpsController.latitude.value ?? ''}"),
-                              Text("${gpsController.longitude.value ?? ''}"),
-                              Text(gpsController.value.value?.country ?? ''),
-                              Text(gpsController.value.value?.state ?? ''),
-                              Text(gpsController.value.value?.city ?? ''),
-                            ],
-                          ),
-                        ],
-                      )
-                      : SizedBox(),
-
-                  ElevatedButton(
-                    onPressed: () async {
-                      gpsController.saveData();
-                    },
-                    child: Text("Save data"),
-                  ),
-                  // ActionSlider.standard(
-                  //   sliderBehavior: SliderBehavior.stretch,
-                  //   width: double.infinity,
-                  //   backgroundColor: Theme.of(context).primaryColor,
-                  //   toggleColor: Theme.of(context).appBarTheme.foregroundColor,
-                  //   action: (controller) async {
-                  //     controller.loading(); //starts loading animation
-                  //     await Future.delayed(const Duration(seconds: 1));
-                  //     // geoController.loadAndSave();
-                  //     log("canSave:${gpsController.canSave.value}");
-                  //     if (gpsController.canSave.value == false) {
-                  //       controller.failure();
-                  //       await Future.delayed(const Duration(seconds: 3));
-                  //     } else {
-                  //       controller.success();
-                  //       await Future.delayed(const Duration(seconds: 1));
-                  //       Get.back();
-                  //     }
-                  //     controller.reset(); //resets the slider
-                  //   },
-                  //   child: CustomText(
-                  //     text: 'Slide to Save Location',
-                  //     size: 14,
-                  //     color: Theme.of(context).appBarTheme.foregroundColor,
-                  //   ),
-                  // ),
+                ] else ...[
+                  Center(child: CircularProgressIndicator()),
                 ],
-              ),
+              ],
             ),
           );
+        }),
+        floatingActionButton: Obx(() {
+          if (gpsController.canSave.value) {
+            return FloatingActionButton(
+              shape: const CircleBorder(),
+              onPressed: () {
+                gpsController.saveData();
+                
+              },
+              backgroundColor: Theme.of(context).primaryColor,
+
+              child: Icon(
+                Icons.add_location_alt,
+                color: Theme.of(context).appBarTheme.foregroundColor,
+              ),
+            );
+          }
+          return SizedBox();
         }),
       ),
     );

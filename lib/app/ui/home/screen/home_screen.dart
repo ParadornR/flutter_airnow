@@ -42,44 +42,47 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (homeScreenController.dataList.isEmpty) {
       return Center(child: Text("ไม่มีข้อมูล"));
     }
-    return ListView.separated(
-      padding: EdgeInsets.all(8),
-      itemCount: homeScreenController.dataList.length,
-      separatorBuilder: (_, __) => SizedBox(height: 8),
-      itemBuilder: (context, index) {
-        final item = homeScreenController.dataList[index];
-        final location = item['location'];
-        final weather = item['weather'];
-        final pollution = item['pollution'];
+    return RefreshIndicator(
+      onRefresh: () => homeScreenController.fetchUserData(),
+      child: ListView.separated(
+        padding: EdgeInsets.all(8),
+        itemCount: homeScreenController.dataList.length,
+        separatorBuilder: (_, __) => SizedBox(height: 8),
+        itemBuilder: (context, index) {
+          final item = homeScreenController.dataList[index];
+          final location = item['location'];
+          final weather = item['weather'];
+          final pollution = item['pollution'];
 
-        final cityName = location['city'];
-        final stateName = location['state'];
-        final countryName = location['country'];
+          final cityName = location['city'];
+          final stateName = location['state'];
+          final countryName = location['country'];
 
-        final temperature = "${weather['tp'] ?? 'N/A'}°c";
-        final humidity = "${weather['hu'] ?? 'N/A'}%";
-        final condition = weather['ic'] ?? "Unknown";
-        final aqi = "${pollution['aqius'] ?? 'N/A'}";
+          final temperature = "${weather['tp'] ?? 'N/A'}°c";
+          final humidity = "${weather['hu'] ?? 'N/A'}%";
+          final condition = weather['ic'] ?? "Unknown";
+          final aqi = "${pollution['aqius'] ?? 'N/A'}";
 
-        return InkWell(
-          onTap: () {
-            homeScreenController.selectedIndex.value = index;
-            log(
-              "[ homeScreenController.selectedIndex.value]: ${homeScreenController.selectedIndex.value}",
-            );
-            Get.to(DetailPage());
-          },
-          child: buildLocationCard(
-            city: cityName,
-            state: stateName,
-            country: countryName,
-            temperature: temperature,
-            humidity: humidity,
-            condition: condition,
-            aqi: aqi,
-          ),
-        );
-      },
+          return InkWell(
+            onTap: () {
+              homeScreenController.selectedIndex.value = index;
+              log(
+                "[ homeScreenController.selectedIndex.value]: ${homeScreenController.selectedIndex.value}",
+              );
+              Get.to(DetailPage());
+            },
+            child: buildLocationCard(
+              city: cityName,
+              state: stateName,
+              country: countryName,
+              temperature: temperature,
+              humidity: humidity,
+              condition: condition,
+              aqi: aqi,
+            ),
+          );
+        },
+      ),
     );
   }
 

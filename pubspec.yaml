@@ -80,6 +80,7 @@ flutter:
   assets:
       - assets/data/countries_with_states.json
       - assets/data/countries.json
+      - assets/icon/
       - assets/lottie/
 
   #   - images/a_dot_burr.jpeg

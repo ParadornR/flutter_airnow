@@ -8,7 +8,7 @@ import 'package:flutter_airnow/app/ui/create/controller/state_controller.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
 import 'package:get/get.dart';
 
-class GeoController extends GetxController {
+class GeoScreenController extends GetxController {
   // find
   final stateController = Get.find<StateController>();
   final cityController = Get.find<CityController>();

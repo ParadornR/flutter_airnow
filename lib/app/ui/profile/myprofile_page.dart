@@ -84,6 +84,8 @@ class _MyprofilePageState extends State<MyprofilePage> {
                                           myProfileController.image.value!.path,
                                         ),
                                       ),
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor,
                                     )
                                     : myProfileController
                                         .urlNetwork

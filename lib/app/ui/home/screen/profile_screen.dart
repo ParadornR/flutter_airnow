@@ -40,6 +40,7 @@ class _HomePageState extends State<ProfileScreen> {
                               backgroundImage: NetworkImage(
                                 userProvider.user.value!.urlImage,
                               ),
+                              backgroundColor: Theme.of(context).primaryColor,
                             ),
                   ),
                 ),
@@ -98,43 +99,7 @@ class _HomePageState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 2),
-                // InkWell(
-                //   onTap: () {
-                //     log("Settings");
-                //   },
-                //   child: Container(
-                //     padding: const EdgeInsets.all(16.0),
-                //     decoration: BoxDecoration(
-                //       color: Theme.of(context).primaryColor,
-                //     ),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //       children: [
-                //         Row(
-                //           children: [
-                //             Icon(
-                //               Icons.person,
-                //               color:
-                //                   Theme.of(context).appBarTheme.foregroundColor,
-                //             ),
-                //             SizedBox(width: 16),
-                //             CustomText(
-                //               text: "Settings",
-                //               size: 16,
-                //               color:
-                //                   Theme.of(context).appBarTheme.foregroundColor,
-                //             ),
-                //           ],
-                //         ),
-                //         Icon(
-                //           Icons.keyboard_arrow_right_outlined,
-                //           color: Theme.of(context).appBarTheme.foregroundColor,
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
+
                 SizedBox(height: 2),
                 InkWell(
                   onTap: () {

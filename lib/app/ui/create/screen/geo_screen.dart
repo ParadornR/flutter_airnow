@@ -6,7 +6,7 @@ import 'package:flutter_airnow/app/data/providers/user_provider.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/country_controller.dart';
-import 'package:flutter_airnow/app/ui/create/controller/geo_controller.dart';
+import 'package:flutter_airnow/app/ui/create/controller/geo_screen_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/state_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
@@ -21,13 +21,19 @@ class GeoScreen extends StatefulWidget {
 class _GeoScreenState extends State<GeoScreen> {
   // find
   final userProvider = Get.find<UserProvider>();
-  // put
-  final countryController = Get.put(CountryController());
-  final stateController = Get.put(StateController());
-  final cityController = Get.put(CityController());
-  final cityDataController = Get.put(CityDataController());
+  final countryController = Get.find<CountryController>();
+  final stateController = Get.find<StateController>();
+  final cityController = Get.find<CityController>();
+  final cityDataController = Get.find<CityDataController>();
+  final geoController = Get.find<GeoScreenController>();
 
-  final geoController = Get.put(GeoController());
+  // put
+  // final countryController = Get.put(CountryController());
+  // final stateController = Get.put(StateController());
+  // final cityController = Get.put(CityController());
+  // final cityDataController = Get.put(CityDataController());
+
+  // final geoController = Get.put(GeoScreenController());
   ActionSliderController? controller = ActionSliderController();
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,7 @@ import 'package:flutter_osm_plugin/flutter_osm_plugin.dart' as osm;
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
-class GpsController extends GetxController {
+class GpsScreenController extends GetxController {
   final cityDataController = Get.find<CityDataController>();
   final userProvider = Get.find<UserProvider>();
   final homeScreenController = Get.find<HomeScreenController>();
@@ -56,6 +56,7 @@ class GpsController extends GetxController {
 
     // ดึงตำแหน่งปัจจุบัน
     return await Geolocator.getCurrentPosition(
+      // ignore: deprecated_member_use
       desiredAccuracy: LocationAccuracy.high,
     );
   }
@@ -148,6 +149,7 @@ class GpsController extends GetxController {
         });
         log("[saveData]: succeed");
         await homeScreenController.fetchUserData();
+        Get.back();
       } else {
         log('มีข้อมูล location นี้แล้ว');
       }

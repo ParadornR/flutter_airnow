@@ -36,7 +36,11 @@ class _HomePageState extends State<HomePage> {
           },
           tooltip: 'Increment',
           shape: const CircleBorder(),
-          child: const Icon(Icons.add),
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(
+            Icons.add,
+            color: Theme.of(context).appBarTheme.foregroundColor,
+          ),
         ),
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
