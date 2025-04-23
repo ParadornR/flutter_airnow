@@ -6,20 +6,22 @@ class CustomText extends StatelessWidget {
   final double size;
   final FontWeight weight;
   final Color? color;
+  final int maxLines;
   const CustomText({
     super.key,
     required this.text,
     required this.size,
     this.weight = FontWeight.normal,
     this.color = Colors.black,
+    this.maxLines = 1,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      maxLines: 1,
       overflow: TextOverflow.ellipsis,
+      maxLines: maxLines,
       style: GoogleFonts.prompt(
         fontSize: size,
         fontWeight: weight,

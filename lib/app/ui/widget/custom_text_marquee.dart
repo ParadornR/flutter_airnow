@@ -47,7 +47,7 @@ class TextWithOverflowCheck extends StatelessWidget {
                       text: text,
                       style: style,
                       scrollAxis: Axis.horizontal,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       blankSpace: 20.0,
                       velocity: 100.0,
                       pauseAfterRound: Duration(seconds: 1),
