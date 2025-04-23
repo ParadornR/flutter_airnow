@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/UI/widget/custom_text.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
@@ -192,19 +191,31 @@ class _DetailPageState extends State<DetailPage> {
                         margin: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: Color.fromRGBO(161, 227, 249, 1),
+                          color: Color.fromRGBO(209, 233, 252, 1),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(text: "Pressure", size: 16),
+                            CustomText(
+                              text: "Pressure",
+                              size: 16,
+                              color: Color.fromRGBO(33, 37, 41, 1),
+                            ),
                             Row(
                               textBaseline: TextBaseline.alphabetic,
                               crossAxisAlignment: CrossAxisAlignment.baseline,
                               children: [
-                                CustomText(text: pressure, size: 24),
-                                CustomText(text: " hPa", size: 16),
+                                CustomText(
+                                  text: pressure,
+                                  size: 24,
+                                  color: Color.fromRGBO(33, 37, 41, 1),
+                                ),
+                                CustomText(
+                                  text: " hPa",
+                                  size: 16,
+                                  color: Color.fromRGBO(33, 37, 41, 1),
+                                ),
                               ],
                             ),
                           ],
@@ -220,19 +231,31 @@ class _DetailPageState extends State<DetailPage> {
                         margin: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: Color.fromRGBO(161, 227, 249, 1),
+                          color: Color.fromRGBO(209, 233, 252, 1),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(text: "Humidity", size: 16),
+                            CustomText(
+                              text: "Humidity",
+                              size: 16,
+                              color: Color.fromRGBO(33, 37, 41, 1),
+                            ),
                             Row(
                               textBaseline: TextBaseline.alphabetic,
                               crossAxisAlignment: CrossAxisAlignment.baseline,
                               children: [
-                                CustomText(text: humidity, size: 24),
-                                CustomText(text: " %", size: 16),
+                                CustomText(
+                                  text: humidity,
+                                  size: 24,
+                                  color: Color.fromRGBO(33, 37, 41, 1),
+                                ),
+                                CustomText(
+                                  text: " %",
+                                  size: 16,
+                                  color: Color.fromRGBO(33, 37, 41, 1),
+                                ),
                               ],
                             ),
                           ],
@@ -252,19 +275,31 @@ class _DetailPageState extends State<DetailPage> {
                         margin: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: Color.fromRGBO(161, 227, 249, 1),
+                          color: Color.fromRGBO(209, 233, 252, 1),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(text: "Wind", size: 16),
+                            CustomText(
+                              text: "Wind",
+                              size: 16,
+                              color: Color.fromRGBO(33, 37, 41, 1),
+                            ),
                             Row(
                               textBaseline: TextBaseline.alphabetic,
                               crossAxisAlignment: CrossAxisAlignment.baseline,
                               children: [
-                                CustomText(text: wind, size: 24),
-                                CustomText(text: " m/s", size: 16),
+                                CustomText(
+                                  text: wind,
+                                  size: 24,
+                                  color: Color.fromRGBO(33, 37, 41, 1),
+                                ),
+                                CustomText(
+                                  text: " m/s",
+                                  size: 16,
+                                  color: Color.fromRGBO(33, 37, 41, 1),
+                                ),
                               ],
                             ),
                           ],
@@ -280,19 +315,31 @@ class _DetailPageState extends State<DetailPage> {
                         margin: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: Color.fromRGBO(161, 227, 249, 1),
+                          color: Color.fromRGBO(209, 233, 252, 1),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(text: "Direction", size: 16),
+                            CustomText(
+                              text: "Direction",
+                              size: 16,
+                              color: Color.fromRGBO(33, 37, 41, 1),
+                            ),
                             Row(
                               textBaseline: TextBaseline.alphabetic,
                               crossAxisAlignment: CrossAxisAlignment.baseline,
                               children: [
-                                CustomText(text: direction, size: 24),
-                                CustomText(text: "°", size: 24),
+                                CustomText(
+                                  text: direction,
+                                  size: 24,
+                                  color: Color.fromRGBO(33, 37, 41, 1),
+                                ),
+                                CustomText(
+                                  text: "°",
+                                  size: 24,
+                                  color: Color.fromRGBO(33, 37, 41, 1),
+                                ),
                               ],
                             ),
                           ],
@@ -318,7 +365,9 @@ class _DetailPageState extends State<DetailPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(children: [CustomText(text: "PM25", size: 16)]),
+                            Row(
+                              children: [CustomText(text: "PM2.5", size: 16)],
+                            ),
                             Row(
                               textBaseline: TextBaseline.alphabetic,
                               crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -490,17 +539,17 @@ class _DetailPageState extends State<DetailPage> {
 
   Color checkBgPM10(int value) {
     if (value >= 0 && value <= 50) {
-      return Color.fromRGBO(173, 242, 200, 1);
+      return Color.fromRGBO(173, 242, 200, 1); // เขียวมิ้นต์อ่อน
     } else if (value <= 80) {
-      return Color.fromRGBO(255, 249, 180, 1);
+      return Color.fromRGBO(255, 249, 180, 1); // เหลืองอ่อน
     } else if (value <= 120) {
-      return Color.fromRGBO(255, 214, 165, 1);
+      return Color.fromRGBO(255, 214, 165, 1); // ส้มพีชอ่อน
     } else if (value <= 180) {
-      return Color.fromRGBO(255, 173, 173, 1);
+      return Color.fromRGBO(255, 173, 173, 1); // ชมพูแดงอ่อน
     } else if (value <= 300) {
-      return Color.fromRGBO(221, 190, 255, 1);
+      return Color.fromRGBO(221, 190, 255, 1); // ม่วงอ่อน
     } else if (value > 300) {
-      return Color.fromRGBO(190, 170, 255, 1);
+      return Color.fromRGBO(190, 170, 255, 1); // ม่วงเข้มกว่า
     } else {
       return Colors.grey;
     }

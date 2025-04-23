@@ -187,6 +187,8 @@ class _MyprofilePageState extends State<MyprofilePage> {
                             controller:
                                 myProfileController.nameController.value,
                             readOnly: !myProfileController.isEdited.value,
+                            cursorColor:
+                                Theme.of(context).appBarTheme.foregroundColor,
                             style: TextStyle(
                               color:
                                   Theme.of(context).appBarTheme.foregroundColor,

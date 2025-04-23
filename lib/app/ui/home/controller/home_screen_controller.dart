@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_airnow/app/data/providers/user_provider.dart';
 
@@ -125,6 +126,24 @@ class HomeScreenController extends GetxController {
       '50d': 'assets/lottie/overcast-fog.json',
     };
     return lottieMap[name] ?? 'assets/lottie/thunderstorms-overcast-rain.json';
+  }
+  
+  Color checkBgPM25(int value) {
+    if (value >= 0 && value <= 25) {
+      return Color.fromRGBO(173, 242, 200, 1);
+    } else if (value <= 37) {
+      return Color.fromRGBO(255, 249, 180, 1);
+    } else if (value <= 50) {
+      return Color.fromRGBO(255, 214, 165, 1);
+    } else if (value <= 90) {
+      return Color.fromRGBO(255, 173, 173, 1);
+    } else if (value <= 150) {
+      return Color.fromRGBO(221, 190, 255, 1);
+    } else if (value > 150) {
+      return Color.fromRGBO(190, 170, 255, 1);
+    } else {
+      return Colors.grey;
+    }
   }
   
 

@@ -23,14 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Obx(() {
       if (homeScreenController.userId.value.isEmpty) {
         return Scaffold(
-          appBar: AppBar(title: Text("AirNow"), centerTitle: true),
+          appBar: AppBar(
+            title: Text("AirNow"),
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+          ),
           body: Center(child: CircularProgressIndicator()),
         );
       }
       return SafeArea(
-        child: Scaffold(
-          appBar: AppBar(title: Text("AirNow"), centerTitle: true),
-          body: bodyWidget(),
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(title: Text("AirNow"), centerTitle: true),
+            body: bodyWidget(),
+          ),
         ),
       );
     });
@@ -61,8 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
           final temperature = "${weather['tp'] ?? 'N/A'}°c";
           final humidity = "${weather['hu'] ?? 'N/A'}%";
           final condition = weather['ic'] ?? "Unknown";
-          final aqi = "${pollution['aqius'] ?? 'N/A'}";
-
+          // final aqi = "${pollution['aqius'] ?? 'N/A'}";
+          int aqi = pollution['aqius'];
           return InkWell(
             onTap: () {
               homeScreenController.selectedIndex.value = index;
@@ -93,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required String temperature,
     required String humidity,
     required String condition,
-    required String aqi,
+    required int aqi,
   }) {
     return Container(
       width: double.infinity,
@@ -183,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Colors.orange.shade100,
+                color: homeScreenController.checkBgPM25(aqi),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   CustomText(text: "US", size: 14, weight: FontWeight.bold),
                   CustomText(text: "AQI", size: 14, weight: FontWeight.bold),
                   SizedBox(height: 8),
-                  CustomText(text: aqi, size: 20),
+                  CustomText(text: "$aqi", size: 20),
                 ],
               ),
             ),

@@ -45,8 +45,6 @@ class MyApp extends StatelessWidget {
         color: Color(0xFF3B78B3),
         elevation: 0,
       ),
-     
-
       colorScheme: baseTheme.colorScheme.copyWith(
         primary: const Color(0xFF3B78B3),
         secondary: const Color(0xFF578FCC),

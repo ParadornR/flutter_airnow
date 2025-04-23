@@ -20,7 +20,7 @@ class MyprofileController extends GetxController {
   @override
   void onInit() {
     loadData();
-    
+
     super.onInit();
   }
 
@@ -74,8 +74,9 @@ class MyprofileController extends GetxController {
 
   Future<void> uploadImage() async {
     log("uploadImage()");
-    if (urlNetwork == urlNetwork) return;
+    // if (urlNetwork == userProvider.user.value!.urlImage.obs) return;
     if (image.value == null) return;
+    String? oldImageUrl = userProvider.user.value!.urlImage;
 
     final String fileName =
         'UserProfileImages/${DateTime.now().millisecondsSinceEpoch}.png';
@@ -83,7 +84,23 @@ class MyprofileController extends GetxController {
 
     try {
       await ref.putFile(File(image.value!.path));
-      urlNetwork.value = await ref.getDownloadURL();
+      final newUrl = await ref.getDownloadURL();
+      // ถ้าอัปโหลดสำเร็จแล้ว ค่อยลบรูปเก่า (ถ้ามี และเป็น URL ของ Firebase Storage)
+
+      if (oldImageUrl != null &&
+          oldImageUrl.isNotEmpty &&
+          oldImageUrl != newUrl &&
+          oldImageUrl.contains('firebase')) {
+        try {
+          final oldRef = _storage.refFromURL(oldImageUrl);
+          await oldRef.delete();
+          log("ลบรูปเก่าเรียบร้อยแล้ว");
+        } catch (e) {
+          log("เกิดข้อผิดพลาดในการลบรูปเก่า: $e");
+        }
+      }
+
+      urlNetwork.value = newUrl;
     } catch (e) {
       log("Error uploading image: $e");
     }
