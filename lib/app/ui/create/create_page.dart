@@ -48,8 +48,8 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
                       indicatorSize: TabBarIndicatorSize.tab,
                       dividerColor: Colors.transparent,
                       indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: const Color(0xFFD7FBF4),
+                        borderRadius: BorderRadius.circular(12.0),
+                        color: Color.fromRGBO(161, 227, 249, 1),
                       ),
                       padding: const EdgeInsets.all(4),
                       labelStyle: Theme.of(context).textTheme.bodyLarge,
