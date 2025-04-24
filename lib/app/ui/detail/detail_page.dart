@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/UI/widget/custom_text.dart';
+import 'package:flutter_airnow/app/ui/detail/datail_controller.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
+import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text_marquee.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -13,8 +15,9 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  final userController = Get.find<UserController>();
   final homeScreenController = Get.find<HomeScreenController>();
-  bool isEdited = false;
+  final datailController = Get.put(DatailController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,40 +26,25 @@ class _DetailPageState extends State<DetailPage> {
         appBar: AppBar(
           title: Text("Weather"),
           centerTitle: true,
-          // actions: [
-          //   isEdited
-          //       ? Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: IconButton(
-          //           icon: Icon(Icons.check),
-          //           onPressed: () {
-          //             isEdited = !isEdited;
-          //             setState(() {});
-          //           },
-          //         ),
-          //       )
-          //       : Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: IconButton(
-          //           icon: Icon(Icons.edit),
-          //           onPressed: () {
-          //             isEdited = !isEdited;
-          //             setState(() {});
-          //           },
-          //         ),
-          //       ),
-          // ],
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => datailController.delete(),
+              ),
+            ),
+          ],
         ),
         body: Obx(() {
-          if (homeScreenController.userId.value.isEmpty) {
+          if (userController.userId.value!.isEmpty) {
             return Center(child: CircularProgressIndicator());
           }
           int selectedIndex = homeScreenController.selectedIndex.value!;
-          final item = homeScreenController.dataList[selectedIndex];
+          final item = userController.dataList[selectedIndex];
 
           final location = item['location'];
           final weather = item['weather'];
-
           final pollution = item['pollution'];
 
           final cityName = location['city'];
@@ -359,7 +347,7 @@ class _DetailPageState extends State<DetailPage> {
                         margin: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: checkBgPM25(valuePm25),
+                          color: datailController.checkBgPM25(valuePm25),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -377,7 +365,7 @@ class _DetailPageState extends State<DetailPage> {
                               ],
                             ),
                             TextWithOverflowCheck(
-                              text: checkStringPM25(valuePm25),
+                              text: datailController.checkStringPM25(valuePm25),
                               size: 16,
                             ),
                           ],
@@ -393,7 +381,7 @@ class _DetailPageState extends State<DetailPage> {
                         margin: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: checkBgPM10(valuePm10),
+                          color: datailController.checkBgPM10(valuePm10),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -409,7 +397,7 @@ class _DetailPageState extends State<DetailPage> {
                               ],
                             ),
                             TextWithOverflowCheck(
-                              text: checkStringPM10(110),
+                              text: datailController.checkStringPM10(110),
                               size: 16,
                             ),
                           ],
@@ -418,140 +406,11 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                   ],
                 ),
-                // Wrap(
-                //   direction: Axis.horizontal,
-                //   alignment: WrapAlignment.center,
-                //   children: [
-                //     Container(
-                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                //       decoration: BoxDecoration(
-                //         color: Color.fromRGBO(173, 242, 200, 1),
-                //         borderRadius: BorderRadius.circular(8),
-                //       ),
-                //       child: CustomText(text: "Good", size: 14),
-                //     ),
-                //     Container(
-                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                //       decoration: BoxDecoration(
-                //         color: Color.fromRGBO(255, 249, 180, 1),
-                //         borderRadius: BorderRadius.circular(8),
-                //       ),
-                //       child: CustomText(text: "Moderate", size: 14),
-                //     ),
-                //     Container(
-                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                //       decoration: BoxDecoration(
-                //         color: Color.fromRGBO(255, 214, 165, 1),
-                //         borderRadius: BorderRadius.circular(8),
-                //       ),
-                //       child: CustomText(
-                //         text: "Unhealthy for sensitive groups",
-                //         size: 14,
-                //       ),
-                //     ),
-                //     Container(
-                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                //       decoration: BoxDecoration(
-                //         color: Color.fromRGBO(255, 173, 173, 1),
-                //         borderRadius: BorderRadius.circular(8),
-                //       ),
-                //       child: CustomText(text: "Unhealthy", size: 14),
-                //     ),
-                //     Container(
-                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                //       decoration: BoxDecoration(
-                //         color: Color.fromRGBO(221, 190, 255, 1),
-                //         borderRadius: BorderRadius.circular(8),
-                //       ),
-                //       child: CustomText(text: "Very unhea,lthy", size: 14),
-                //     ),
-                //     Container(
-                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                //       decoration: BoxDecoration(
-                //         color: Color.fromRGBO(190, 170, 255, 1),
-                //         borderRadius: BorderRadius.circular(8),
-                //       ),
-                //       child: CustomText(text: "Hazardous", size: 14),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           );
         }),
       ),
     );
-  }
-
-  String checkStringPM25(int value) {
-    if (value >= 0 && value <= 25) {
-      return "Good";
-    } else if (value <= 37) {
-      return "Moderate";
-    } else if (value <= 50) {
-      return "Unhealthy for sensitive groups";
-    } else if (value <= 90) {
-      return "Unhealthy";
-    } else if (value <= 150) {
-      return "Very unhealthy";
-    } else if (value > 150) {
-      return "Hazardous";
-    } else {
-      return "unknown";
-    }
-  }
-
-  String checkStringPM10(int value) {
-    if (value >= 0 && value <= 50) {
-      return "Good";
-    } else if (value <= 80) {
-      return "Moderate";
-    } else if (value <= 120) {
-      return "Unhealthy for sensitive groups";
-    } else if (value <= 180) {
-      return "Unhealthy";
-    } else if (value <= 300) {
-      return "Very unhealthy";
-    } else if (value > 300) {
-      return "Hazardous";
-    } else {
-      return "unknown";
-    }
-  }
-
-  Color checkBgPM25(int value) {
-    if (value >= 0 && value <= 25) {
-      return Color.fromRGBO(173, 242, 200, 1);
-    } else if (value <= 37) {
-      return Color.fromRGBO(255, 249, 180, 1);
-    } else if (value <= 50) {
-      return Color.fromRGBO(255, 214, 165, 1);
-    } else if (value <= 90) {
-      return Color.fromRGBO(255, 173, 173, 1);
-    } else if (value <= 150) {
-      return Color.fromRGBO(221, 190, 255, 1);
-    } else if (value > 150) {
-      return Color.fromRGBO(190, 170, 255, 1);
-    } else {
-      return Colors.grey;
-    }
-  }
-
-  Color checkBgPM10(int value) {
-    if (value >= 0 && value <= 50) {
-      return Color.fromRGBO(173, 242, 200, 1); // เขียวมิ้นต์อ่อน
-    } else if (value <= 80) {
-      return Color.fromRGBO(255, 249, 180, 1); // เหลืองอ่อน
-    } else if (value <= 120) {
-      return Color.fromRGBO(255, 214, 165, 1); // ส้มพีชอ่อน
-    } else if (value <= 180) {
-      return Color.fromRGBO(255, 173, 173, 1); // ชมพูแดงอ่อน
-    } else if (value <= 300) {
-      return Color.fromRGBO(221, 190, 255, 1); // ม่วงอ่อน
-    } else if (value > 300) {
-      return Color.fromRGBO(190, 170, 255, 1); // ม่วงเข้มกว่า
-    } else {
-      return Colors.grey;
-    }
   }
 }

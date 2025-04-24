@@ -4,13 +4,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/data/providers/user_provider.dart';
+import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyprofileController extends GetxController {
-  final userProvider = Get.find<UserProvider>();
+  final userController = Get.find<UserController>();
   var nameController = TextEditingController().obs;
   var mailController = TextEditingController().obs;
   var phoneController = TextEditingController().obs;
@@ -31,10 +31,10 @@ class MyprofileController extends GetxController {
   }
 
   void loadData() {
-    nameController.value.text = userProvider.user.value!.name;
-    mailController.value.text = userProvider.user.value!.email;
-    phoneController.value.text = userProvider.user.value!.phone;
-    urlNetwork = userProvider.user.value!.urlImage.obs;
+    nameController.value.text = userController.user.value!.name;
+    mailController.value.text = userController.user.value!.email;
+    phoneController.value.text = userController.user.value!.phone;
+    urlNetwork = userController.user.value!.urlImage.obs;
     // log(nameController.value.text);
     // log(mailController.value.text);
     // log(phoneController.value.text);
@@ -49,7 +49,7 @@ class MyprofileController extends GetxController {
         'phone': phoneController.value.text,
         'urlImage': urlNetwork.value,
       });
-      userProvider.fetchUserData();
+      userController.fetchUserData();
       log('อัปเดตข้อมูลเรียบร้อยแล้ว');
     } catch (e) {
       log('เกิดข้อผิดพลาด: $e');
@@ -74,9 +74,9 @@ class MyprofileController extends GetxController {
 
   Future<void> uploadImage() async {
     log("uploadImage()");
-    // if (urlNetwork == userProvider.user.value!.urlImage.obs) return;
+    // if (urlNetwork == userController.user.value!.urlImage.obs) return;
     if (image.value == null) return;
-    String? oldImageUrl = userProvider.user.value!.urlImage;
+    String? oldImageUrl = userController.user.value!.urlImage;
 
     final String fileName =
         'UserProfileImages/${DateTime.now().millisecondsSinceEpoch}.png';
@@ -87,6 +87,7 @@ class MyprofileController extends GetxController {
       final newUrl = await ref.getDownloadURL();
       // ถ้าอัปโหลดสำเร็จแล้ว ค่อยลบรูปเก่า (ถ้ามี และเป็น URL ของ Firebase Storage)
 
+      // ignore: unnecessary_null_comparison
       if (oldImageUrl != null &&
           oldImageUrl.isNotEmpty &&
           oldImageUrl != newUrl &&

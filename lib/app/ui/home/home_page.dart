@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/data/providers/user_provider.dart';
+import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:flutter_airnow/app/ui/create/create_page.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_page_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final homePageController = Get.put(HomePageController());
-  final userProvider = Get.put(UserProvider());
+  final userController = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {

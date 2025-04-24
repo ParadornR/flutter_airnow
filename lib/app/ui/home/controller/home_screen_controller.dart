@@ -1,95 +1,26 @@
-import 'dart:developer';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_airnow/app/data/providers/user_provider.dart';
+import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 
 class HomeScreenController extends GetxController {
-  final userProvider = Get.find<UserProvider>();
-  var isLoading = true.obs;
-  var userId = ''.obs;
-  var dataList = <Map<String, dynamic>>[].obs;
+  final userController = Get.find<UserController>();
+
   var selectedIndex = Rx<int?>(null);
 
   @override
   void onInit() {
     super.onInit();
-    // listen เมื่อ userProvider.userId มีค่า แล้วค่อยเซ็ต
-    ever(userProvider.userId, (String? uid) {
+    ever(userController.userId, (String? uid) {
       if (uid != null && uid.isNotEmpty) {
-        userId.value = uid;
-        fetchUserData();
+        userController
+            .fetchAllCardLocationData(); // ดึงข้อมูลเมื่อ userId พร้อม
       }
     });
-    // เผื่อ userId มีค่ามาแล้วตั้งแต่แรก
-    if (userProvider.userId.value != null &&
-        userProvider.userId.value!.isNotEmpty) {
-      userId.value = userProvider.userId.value!;
-      fetchUserData();
+
+    if (userController.userId.value != null &&
+        userController.userId.value!.isNotEmpty) {
+      userController.fetchAllCardLocationData(); // กรณี userId มีค่ามาแล้ว
     }
-  }
-
-  Future<void> fetchUserData() async {
-    isLoading.value = true;
-    try {
-      final data = await getAllUserLocationWithDetails(userId.value);
-      dataList.assignAll(data);
-    } catch (e) {
-      log('เกิดข้อผิดพลาด: $e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> getAllUserLocationWithDetails(
-    String userId,
-  ) async {
-    final locationSnapshot =
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .collection('location')
-            .get();
-
-    List<Map<String, dynamic>> fullData = [];
-
-    for (final doc in locationSnapshot.docs) {
-      final locationData = doc.data();
-      final city = locationData['city'];
-
-      final weatherFuture =
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(userId)
-              .collection('location')
-              .doc(city)
-              .collection('weather')
-              .get();
-
-      final pollutionFuture =
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(userId)
-              .collection('location')
-              .doc(city)
-              .collection('pollution')
-              .get();
-
-      final results = await Future.wait([weatherFuture, pollutionFuture]);
-
-      final weather =
-          results[0].docs.isNotEmpty ? results[0].docs.first.data() : {};
-      final pollution =
-          results[1].docs.isNotEmpty ? results[1].docs.first.data() : {};
-
-      fullData.add({
-        'location': locationData,
-        'weather': weather,
-        'pollution': pollution,
-      });
-    }
-    // log("[fullData]:$fullData");
-    return fullData;
   }
 
   String getWeatherDescription(String name) {
@@ -127,7 +58,7 @@ class HomeScreenController extends GetxController {
     };
     return lottieMap[name] ?? 'assets/lottie/thunderstorms-overcast-rain.json';
   }
-  
+
   Color checkBgPM25(int value) {
     if (value >= 0 && value <= 25) {
       return Color.fromRGBO(173, 242, 200, 1);
@@ -145,6 +76,4 @@ class HomeScreenController extends GetxController {
       return Colors.grey;
     }
   }
-  
-
 }

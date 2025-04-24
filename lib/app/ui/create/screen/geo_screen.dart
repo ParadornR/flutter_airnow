@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:action_slider/action_slider.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/data/providers/user_provider.dart';
+import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/country_controller.dart';
@@ -20,7 +20,7 @@ class GeoScreen extends StatefulWidget {
 
 class _GeoScreenState extends State<GeoScreen> {
   // find
-  final userProvider = Get.find<UserProvider>();
+  final userController = Get.find<UserController>();
   final countryController = Get.find<CountryController>();
   final stateController = Get.find<StateController>();
   final cityController = Get.find<CityController>();

@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_airnow/app/data/models/city_data_model.dart';
-import 'package:flutter_airnow/app/data/providers/user_provider.dart';
+import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart' as osm;
@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 class GpsScreenController extends GetxController {
   final cityDataController = Get.find<CityDataController>();
-  final userProvider = Get.find<UserProvider>();
+  final userController = Get.find<UserController>();
   final homeScreenController = Get.find<HomeScreenController>();
 
   var latitude = Rx<double?>(null);
@@ -102,7 +102,7 @@ class GpsScreenController extends GetxController {
     final pollution = cityDataController.cityData.value!.data.current.pollution;
     final weather = cityDataController.cityData.value!.data.current.weather;
     try {
-      final userId = userProvider.userId.value;
+      final userId = userController.userId.value;
       final locationRef = FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
@@ -148,7 +148,7 @@ class GpsScreenController extends GetxController {
           'created_at': DateTime.now(),
         });
         log("[saveData]: succeed");
-        await homeScreenController.fetchUserData();
+        await userController.fetchAllCardLocationData();
         Get.back();
       } else {
         log('มีข้อมูล location นี้แล้ว');

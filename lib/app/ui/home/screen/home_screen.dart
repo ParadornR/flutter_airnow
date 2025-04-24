@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/UI/widget/custom_text.dart';
 import 'package:flutter_airnow/app/ui/detail/detail_page.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
+import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text_marquee.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -17,45 +18,50 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final homeScreenController = Get.put(HomeScreenController());
+  final userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (homeScreenController.userId.value.isEmpty) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("AirNow"),
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-          ),
-          body: Center(child: CircularProgressIndicator()),
-        );
-      }
-      return SafeArea(
-        child: SafeArea(
-          child: Scaffold(
-            appBar: AppBar(title: Text("AirNow"), centerTitle: true),
-            body: bodyWidget(),
-          ),
+    return SafeArea(
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(title: Text("AirNow"), centerTitle: true),
+          body: Obx(() => bodyWidget()),
         ),
-      );
-    });
+      ),
+    );
   }
 
   Widget bodyWidget() {
-    if (homeScreenController.isLoading.value) {
+    log("[dataList]: ${userController.dataList}");
+    if (userController.isLoading.value) {
       return Center(child: CircularProgressIndicator());
-    } else if (homeScreenController.dataList.isEmpty) {
-      return Center(child: Text("ไม่มีข้อมูล"));
+    } else if (userController.dataList.isEmpty) {
+      return RefreshIndicator(
+        onRefresh: () => userController.fetchAllCardLocationData(),
+        child: Center(
+          child: ListView(
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height * 0.75,
+                ),
+                child: Center(child: Text("ไม่มีข้อมูล")),
+              ),
+            ],
+          ),
+        ),
+      );
     }
     return RefreshIndicator(
-      onRefresh: () => homeScreenController.fetchUserData(),
+      onRefresh: () => userController.fetchAllCardLocationData(),
       child: ListView.separated(
         padding: EdgeInsets.all(8),
-        itemCount: homeScreenController.dataList.length,
+        itemCount: userController.dataList.length,
         separatorBuilder: (_, __) => SizedBox(height: 8),
         itemBuilder: (context, index) {
-          final item = homeScreenController.dataList[index];
+          log("[ListView]: ${userController.dataList}");
+          final item = userController.dataList[index];
           final location = item['location'];
           final weather = item['weather'];
           final pollution = item['pollution'];
@@ -72,10 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return InkWell(
             onTap: () {
               homeScreenController.selectedIndex.value = index;
-              log(
-                "[ homeScreenController.selectedIndex.value]: ${homeScreenController.selectedIndex.value}",
-              );
-              Get.to(DetailPage());
+              Get.to(() => DetailPage());
             },
             child: buildLocationCard(
               city: cityName,

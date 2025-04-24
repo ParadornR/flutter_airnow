@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_airnow/app/data/providers/user_provider.dart';
+import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/state_controller.dart';
@@ -13,7 +13,7 @@ class GeoScreenController extends GetxController {
   final stateController = Get.find<StateController>();
   final cityController = Get.find<CityController>();
   final cityDataController = Get.find<CityDataController>();
-  final userProvider = Get.find<UserProvider>();
+  final userController = Get.find<UserController>();
   final homeScreenController = Get.find<HomeScreenController>();
 
   var selectedCountryValue = Rx<String?>(null);
@@ -101,7 +101,7 @@ class GeoScreenController extends GetxController {
       final weather = cityDataController.cityData.value!.data.current.weather;
 
       try {
-        final userId = userProvider.userId.value;
+        final userId = userController.userId.value;
         final locationRef = FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
@@ -115,7 +115,7 @@ class GeoScreenController extends GetxController {
         // Locatio ที่หาได้มีไหม?
         if (cityDocQuery.docs.isEmpty) {
           // ไม่มี สร้างใหม่
-          
+
           await cityDocRef.set({
             'city': value.city,
             'state': value.state,
@@ -146,8 +146,7 @@ class GeoScreenController extends GetxController {
             'ts': weather.ts,
             'created_at': DateTime.now(),
           });
-          await homeScreenController.fetchUserData();
-         
+          await userController.fetchAllCardLocationData();
         } else {
           log('มีข้อมูล location นี้แล้ว');
           canSave.value = false;

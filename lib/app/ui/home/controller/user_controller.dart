@@ -1,0 +1,133 @@
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_airnow/app/data/models/user_model.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class UserController extends GetxController {
+  var user = Rx<User?>(null);
+  var userId = Rx<String?>(null);
+  var isLoading = true.obs;
+  var dataList = <Map<String, dynamic>>[].obs;
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  @override
+  void onInit() {
+    fetchUserData();
+    fetchAllCardLocationData();
+    super.onInit();
+  }
+  
+  // Function to fetch user data and update the state
+  Future<void> fetchUserData() async {
+    try {
+      userId.value = await _getUserIdFromSharedPreferences();
+      log('[fetchUserData] userId : ${userId.value}');
+      if (userId.value != null) {
+        DocumentSnapshot snapshot =
+            await firestore.collection('users').doc(userId.value!).get();
+        if (snapshot.exists) {
+          user.value = User.fromMap(snapshot.data() as Map<String, dynamic>);
+          log('[fetchUserData] Data: ${user.value}');
+        } else {
+          log('[fetchUserData] No user found');
+        }
+      } else {
+        log('[fetchUserData] User ID is not available');
+      }
+    } catch (e) {
+      log('[fetchUserData] Error: $e');
+    }
+  }
+
+  Future<void> deleteCardDataUser(String city) async {
+    
+    try {
+      userId.value = (await _getUserIdFromSharedPreferences());
+      log('[deleteCardDataUser] userId : $userId');
+      if (userId.value != null) {
+        await firestore
+            .collection('users')
+            .doc(userId.value!)
+            .collection('location')
+            .doc(city)
+            .delete();
+        Get.back();
+      } else {
+        log('[deleteCardDataUser] CardData is not available');
+      }
+    } catch (e) {
+      log('[deleteCardDataUser] Error in provider: $e');
+    }
+  }
+
+  Future<void> fetchAllCardLocationData() async {
+    isLoading.value = true;
+    try {
+      if (userId.value != null && userId.value!.isNotEmpty) {
+        final data = await _getUserAllCardLocation(userId.value!);
+        dataList.assignAll(data);
+      }
+    } catch (e) {
+      log('[fetchAllLocationData] Error: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> _getUserAllCardLocation(
+    String userId,
+  ) async {
+    final locationSnapshot =
+        await firestore
+            .collection('users')
+            .doc(userId)
+            .collection('location')
+            .get();
+
+    List<Map<String, dynamic>> fullData = [];
+    for (final doc in locationSnapshot.docs) {
+      final locationData = doc.data();
+      final city = locationData['city'];
+
+      final weatherFuture =
+          firestore
+              .collection('users')
+              .doc(userId)
+              .collection('location')
+              .doc(city)
+              .collection('weather')
+              .get();
+
+      final pollutionFuture =
+          firestore
+              .collection('users')
+              .doc(userId)
+              .collection('location')
+              .doc(city)
+              .collection('pollution')
+              .get();
+
+      final results = await Future.wait([weatherFuture, pollutionFuture]);
+
+      final weather =
+          results[0].docs.isNotEmpty ? results[0].docs.first.data() : {};
+      final pollution =
+          results[1].docs.isNotEmpty ? results[1].docs.first.data() : {};
+
+      fullData.add({
+        'location': locationData,
+        'weather': weather,
+        'pollution': pollution,
+      });
+    }
+    log("[fullData]: $fullData");
+    return fullData;
+  }
+
+  Future<String?> _getUserIdFromSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('uid');
+  }
+}
