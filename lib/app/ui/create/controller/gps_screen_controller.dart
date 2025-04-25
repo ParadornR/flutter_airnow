@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/data/models/city_data_model.dart';
 import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
+import 'package:flutter_airnow/app/ui/home/home_page.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart' as osm;
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -147,11 +149,25 @@ class GpsScreenController extends GetxController {
           'ts': weather.ts,
           'created_at': DateTime.now(),
         });
+        Get.snackbar(
+          'Location Data Saved',
+          "Your location data has been successfully recorded.",
+          margin: EdgeInsets.all(8),
+          backgroundColor: Color.fromRGBO(76, 175, 80, 1),
+          colorText: Colors.white,
+        );
         log("[saveData]: succeed");
         await userController.fetchAllCardLocationData();
-        Get.back();
+        Get.offAll(() => HomePage());
       } else {
         log('มีข้อมูล location นี้แล้ว');
+        Get.snackbar(
+          'Location Data Already Exists',
+          "This location is already saved in the system.",
+          margin: EdgeInsets.all(8),
+          backgroundColor: Color.fromRGBO(255, 193, 7, 1),
+          colorText: Colors.white,
+        );
       }
     } catch (e, stackTrace) {
       log('เกิดข้อผิดพลาดในการบันทึกข้อมูล: $e\n$stackTrace');

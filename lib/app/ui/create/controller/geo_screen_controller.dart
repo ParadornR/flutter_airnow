@@ -1,11 +1,12 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/state_controller.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
+import 'package:flutter_airnow/app/ui/home/home_page.dart';
 import 'package:get/get.dart';
 
 class GeoScreenController extends GetxController {
@@ -77,11 +78,11 @@ class GeoScreenController extends GetxController {
     }
   }
 
-  var canSave = false.obs;
+  var canSave = true.obs;
   var isAllNotEmpty = false.obs;
+
   loadAndSave() async {
     //use load data from api
-    canSave.value = true;
     isAllNotEmpty.value =
         selectedCountryValue.value!.isNotEmpty &&
         selectedStateValue.value!.isNotEmpty &&
@@ -146,8 +147,24 @@ class GeoScreenController extends GetxController {
             'ts': weather.ts,
             'created_at': DateTime.now(),
           });
+          Get.snackbar(
+            'Location Data Saved',
+            "Your location data has been successfully recorded.",
+            margin: EdgeInsets.all(8),
+            backgroundColor: Color.fromRGBO(76, 175, 80, 1),
+            colorText: Colors.white,
+          );
+          canSave.value = true;
           await userController.fetchAllCardLocationData();
+          Get.offAll(() => HomePage());
         } else {
+          Get.snackbar(
+            'Location Data Already Exists',
+            "This location is already saved in the system.",
+            margin: EdgeInsets.all(8),
+            backgroundColor: Color.fromRGBO(255, 193, 7, 1),
+            colorText: Colors.white,
+          );
           log('มีข้อมูล location นี้แล้ว');
           canSave.value = false;
         }

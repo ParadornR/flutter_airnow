@@ -96,7 +96,6 @@ class _GpsScreenState extends State<GpsScreen> {
               gpsController.saveData();
             },
             backgroundColor: Theme.of(context).primaryColor,
-
             child: Icon(
               Icons.add_location_alt,
               color: Theme.of(context).appBarTheme.foregroundColor,

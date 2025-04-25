@@ -56,7 +56,7 @@ class HomeScreenController extends GetxController {
       '13d': 'assets/lottie/overcast-snow.json',
       '50d': 'assets/lottie/overcast-fog.json',
     };
-    return lottieMap[name] ?? 'assets/lottie/thunderstorms-overcast-rain.json';
+    return lottieMap[name] ?? 'assets/lottie/overcast.json';
   }
 
   Color checkBgPM25(int value) {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/UI/widget/custom_text.dart';
 import 'package:flutter_airnow/app/ui/detail/detail_page.dart';
@@ -33,12 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget bodyWidget() {
-    log("[dataList]: ${userController.dataList}");
     if (userController.isLoading.value) {
       return Center(child: CircularProgressIndicator());
     } else if (userController.dataList.isEmpty) {
       return RefreshIndicator(
-        onRefresh: () => userController.fetchAllCardLocationData(),
+        onRefresh: () => userController.updateData(),
         child: Center(
           child: ListView(
             children: [
@@ -46,7 +43,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 constraints: BoxConstraints(
                   minHeight: MediaQuery.of(context).size.height * 0.75,
                 ),
-                child: Center(child: Text("ไม่มีข้อมูล")),
+                child: Center(
+                  child: Column(
+                    children: [
+                      CustomText(
+                        text: "NOTING!!",
+                        size: 24,
+                        weight: FontWeight.bold,
+                      ),
+                      CustomText(
+                        text: "Your collection list is empty.",
+                        size: 14,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
@@ -54,13 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
     return RefreshIndicator(
-      onRefresh: () => userController.fetchAllCardLocationData(),
+      onRefresh: () => userController.updateData(),
       child: ListView.separated(
         padding: EdgeInsets.all(8),
         itemCount: userController.dataList.length,
         separatorBuilder: (_, __) => SizedBox(height: 8),
         itemBuilder: (context, index) {
-          log("[ListView]: ${userController.dataList}");
           final item = userController.dataList[index];
           final location = item['location'];
           final weather = item['weather'];
@@ -197,8 +207,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomText(text: "US", size: 14, weight: FontWeight.bold),
-                  CustomText(text: "AQI", size: 14, weight: FontWeight.bold),
+                  CustomText(text: "PM", size: 14, weight: FontWeight.bold),
+                  CustomText(text: "2.5", size: 14, weight: FontWeight.bold),
                   SizedBox(height: 8),
                   CustomText(text: "$aqi", size: 20),
                 ],

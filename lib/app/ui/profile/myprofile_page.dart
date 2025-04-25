@@ -14,7 +14,7 @@ class MyprofilePage extends StatefulWidget {
 
 class _MyprofilePageState extends State<MyprofilePage> {
   final myProfileController = Get.put(MyprofileController());
-
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(

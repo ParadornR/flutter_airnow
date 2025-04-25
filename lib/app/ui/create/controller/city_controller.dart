@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 
 class CityController extends GetxController {
   // loadCity api
+
   late CityRepository cityRepository;
-  var isLoadingCity = false.obs;
   var city = Rx<CityApiModel?>(null);
 
   @override
@@ -22,15 +22,12 @@ class CityController extends GetxController {
     required String country,
   }) async {
     log('[loadCity]: loadng...');
-    isLoadingCity.value = true;
     try {
       final result = await cityRepository.fetchCity(state, country);
       city.value = result;
       log('[loadCity]: succeed');
     } catch (e) {
       log("Error: $e");
-    } finally {
-      isLoadingCity.value = false;
     }
   }
 }

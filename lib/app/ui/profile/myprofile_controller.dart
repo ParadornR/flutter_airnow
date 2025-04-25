@@ -50,9 +50,21 @@ class MyprofileController extends GetxController {
         'urlImage': urlNetwork.value,
       });
       userController.fetchUserData();
-      log('อัปเดตข้อมูลเรียบร้อยแล้ว');
+      Get.snackbar(
+        'Profile Updated',
+        "Your profile information has been successfully updated.",
+                margin: EdgeInsets.all(8),
+        backgroundColor: Color.fromRGBO(76, 175, 80, 1),
+        colorText: Colors.white,
+      );
     } catch (e) {
-      log('เกิดข้อผิดพลาด: $e');
+      Get.snackbar(
+        'Update Failed',
+        "An error occurred while updating your profile. Please try again later.",
+        margin: EdgeInsets.all(8),
+        backgroundColor: Color.fromRGBO(76, 175, 80, 1),
+        colorText: Colors.white,
+      );
     }
   }
 

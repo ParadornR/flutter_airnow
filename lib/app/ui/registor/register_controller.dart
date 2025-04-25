@@ -36,16 +36,31 @@ class RegisterController extends GetxController {
             // 'profile_picture': urlController.text,
             'created_at': DateTime.now(),
           });
-          Get.snackbar('Succeed', "สมัครสมาชิกสำเร็จ!");
-          Get.off(LoginPage()); // กลับไปหน้าก่อนหน้า (Login)
+          Get.snackbar(
+            'Registration Successful',
+            "Your account has been created successfully. Welcome aboard!",
+            margin: EdgeInsets.all(8),
+            backgroundColor: Color.fromRGBO(76, 175, 80, 1),
+            colorText: Colors.white,
+          );
+          Get.off(LoginPage());
         } catch (e) {
-          Get.snackbar('Error', "เกิดข้อผิดพลาด: $e");
+          Get.snackbar(
+            'Duplicate Registration',
+            "This account has already been registered. Please log in or use a different email address.",
+            margin: EdgeInsets.all(8),
+            backgroundColor: Color.fromRGBO(255, 193, 7, 1),
+            colorText: Colors.white,
+          );
         }
       }
     } else {
       Get.snackbar(
-        'Error',
-        'The password and confirmation password do not match.',
+        'Password Mismatch',
+        "The password and confirmation password do not match. Please try again.",
+        margin: EdgeInsets.all(8),
+        backgroundColor: Color.fromRGBO(244, 67, 54, 1),
+        colorText: Colors.white,
       );
     }
   }

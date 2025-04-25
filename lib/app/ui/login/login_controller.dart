@@ -23,10 +23,24 @@ class LoginController extends GetxController {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLogin', true);
       await prefs.setString('uid', uid);
+      Get.snackbar(
+        'Login successful!',
+        "Welcome back.",
+        margin: EdgeInsets.all(8),
+        backgroundColor: Color.fromRGBO(76, 175, 80, 1),
+        colorText: Colors.white,
+      );
       Get.off(() => HomePage());
       onClose();
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      log("[Error]:$e");
+      Get.snackbar(
+        'Login failed',
+        "Please check your username and password.",
+        margin: EdgeInsets.all(8),
+        backgroundColor: Color.fromRGBO(244, 67, 54, 1),
+        colorText: Colors.white,
+      );
     }
   }
 

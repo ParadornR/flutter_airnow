@@ -13,9 +13,6 @@ class CityDataRepository {
     String state,
     String country,
   ) async {
-    log("[fetchDataWithCSC city]:$city");
-    log("[fetchDataWithCSC state]:$state");
-    log("[fetchDataWithCSC country]:$country");
     try {
       final response = await apiService.fetchCityDataWithCityStateCountry(
         city,
@@ -25,7 +22,9 @@ class CityDataRepository {
       if (response.isOk) {
         return CityDataModel.fromJson(response.body);
       } else {
-        throw Exception('Failed to load city data');
+        throw Exception(
+          '[fetchCityDataWithCityStateCountry] Failed to load city data',
+        );
       }
     } catch (e) {
       rethrow; // ทำการโยนข้อผิดพลาดกลับ

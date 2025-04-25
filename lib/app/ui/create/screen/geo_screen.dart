@@ -219,7 +219,7 @@ class _GeoScreenState extends State<GeoScreen> {
                 );
               }),
               Obx(() {
-                if (cityController.isLoadingCity.value) {
+                if (cityDataController.isLoadingcityData.value) {
                   return Center(child: CircularProgressIndicator());
                 }
                 return Container(
@@ -319,18 +319,16 @@ class _GeoScreenState extends State<GeoScreen> {
                   toggleColor: Theme.of(context).appBarTheme.foregroundColor,
                   action: (controller) async {
                     controller.loading(); //starts loading animation
-                    await Future.delayed(const Duration(seconds: 1));
-                    geoController.loadAndSave();
+                    await geoController.loadAndSave();
                     log("canSave:${geoController.canSave.value}");
-                    if (geoController.canSave.value == false) {
-                      controller.failure();
-                      await Future.delayed(const Duration(seconds: 3));
-                    } else {
+                    if (geoController.canSave.value) {
                       controller.success();
                       await Future.delayed(const Duration(seconds: 1));
-                      Get.back();
+                    } else {
+                      controller.failure();
+                      await Future.delayed(const Duration(seconds: 3));
+                      controller.reset(); //resets the slider
                     }
-                    controller.reset(); //resets the slider
                   },
                   child: CustomText(
                     text: 'Slide to Save Location',

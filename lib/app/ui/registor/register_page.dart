@@ -16,7 +16,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final registerController = Get.put(RegisterController());
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: GestureDetector(
         onTap: FocusScope.of(context).unfocus,
@@ -33,7 +32,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-            
                       Column(
                         children: [
                           Row(
@@ -134,7 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             validator: (value) {
                               if (value == null || value.length < 8) {
-                                return "Please enter your password.";
+                                return "Your password must be at least 8 characters.";
                               }
                               return null;
                             },
@@ -162,7 +160,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             validator: (value) {
                               if (value == null || value.length < 8) {
-                                return "Please enter your confirm password.";
+                                return "Your confirm password must be at least 8 characters.";
                               }
                               return null;
                             },
