@@ -145,6 +145,7 @@ class UserController extends GetxController {
               .collection('location')
               .doc(city)
               .collection('weather')
+              .orderBy('created_at', descending: true)
               .get();
 
       final pollutionFuture =
@@ -154,14 +155,16 @@ class UserController extends GetxController {
               .collection('location')
               .doc(city)
               .collection('pollution')
+              .orderBy('created_at', descending: true)
               .get();
 
       final results = await Future.wait([weatherFuture, pollutionFuture]);
-
+      log("results[0]: ${results[0].docs.first.data()}");
+      log("results[1]: ${results[1].docs.first.data()}");
       final weather =
-          results[0].docs.isNotEmpty ? results[0].docs.last.data() : {};
+          results[0].docs.isNotEmpty ? results[0].docs.first.data() : {};
       final pollution =
-          results[1].docs.isNotEmpty ? results[1].docs.last.data() : {};
+          results[1].docs.isNotEmpty ? results[1].docs.first.data() : {};
 
       fullData.add({
         'location': locationData,
@@ -185,7 +188,7 @@ class UserController extends GetxController {
     final length = dataList.length;
     log("[dataList]: $dataList");
     log("[length]: $length");
-    for (var index = 0; index <= length; index++) {
+    for (var index = 0; index < length; index++) {
       final city = dataList[index]['location']['city'];
       final state = dataList[index]['location']['state'];
       final country = dataList[index]['location']['country'];
