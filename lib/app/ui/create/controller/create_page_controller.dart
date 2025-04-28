@@ -17,4 +17,14 @@ class CreatePageController extends GetxController {
 
   final geoController = Get.put(GeoScreenController());
   final gpsController = Get.put(GpsScreenController());
+
+  claerValue() {
+    gpsController.canSave.value = false;
+    geoController.selectedCountryValue.value = null;
+    geoController.selectedStateValue.value = null;
+    geoController.selectedCityValue.value = null;
+    stateController.states.value = [];
+    cityController.city.value = null;
+    geoController.isAllNotEmpty.value = false;
+  }
 }

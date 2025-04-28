@@ -52,7 +52,6 @@ class UserController extends GetxController {
       // เรียกดู userId จาก SharedPreferences
       userId.value = (await _getUserIdFromSharedPreferences());
       log('[deleteCardDataUser] userId : $userId');
-
       if (userId.value != null) {
         // ลบเอกสารทั้งหมดในคอลเล็กชัน 'weather'
         final weatherDocs =
@@ -67,7 +66,6 @@ class UserController extends GetxController {
         for (var doc in weatherDocs.docs) {
           await doc.reference.delete();
         }
-
         // ลบเอกสารทั้งหมดในคอลเล็กชัน 'pollution'
         final pollutionDocs =
             await firestore

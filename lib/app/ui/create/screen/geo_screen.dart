@@ -52,7 +52,10 @@ class _GeoScreenState extends State<GeoScreen> {
                   padding: EdgeInsets.all(8),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
+                    color:
+                        geoController.selectedCountryValue.value == null
+                            ? Colors.grey.shade300
+                            : Colors.green.shade300,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: DropdownButtonHideUnderline(
@@ -140,7 +143,10 @@ class _GeoScreenState extends State<GeoScreen> {
                   padding: EdgeInsets.all(8),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
+                    color:
+                        geoController.selectedStateValue.value == null
+                            ? Colors.grey.shade300
+                            : Colors.green.shade300,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: DropdownButtonHideUnderline(
@@ -227,7 +233,10 @@ class _GeoScreenState extends State<GeoScreen> {
                   padding: EdgeInsets.all(8),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
+                    color:
+                        geoController.selectedCityValue.value == null
+                            ? Colors.grey.shade300
+                            : Colors.green.shade300,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: DropdownButtonHideUnderline(

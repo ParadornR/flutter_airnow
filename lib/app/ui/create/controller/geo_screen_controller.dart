@@ -28,6 +28,7 @@ class GeoScreenController extends GetxController {
   onChangedCountry(value) {
     selectedStateValue.value = null;
     selectedCityValue.value = null;
+    cityController.city.value = null;
     isAllNotEmpty.value = false;
     log("selectedCountryValue:$value");
     selectedCountryValue.value = value;

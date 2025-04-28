@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_airnow/app/ui/create/controller/create_page_controller.dart';
-import 'package:flutter_airnow/app/ui/create/controller/gps_screen_controller.dart';
 import 'package:flutter_airnow/app/ui/create/screen/gps_screen.dart';
 import 'package:flutter_airnow/app/ui/create/screen/geo_screen.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,6 @@ class CreatePage extends StatefulWidget {
 
 class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
   final createPageController = Get.put(CreatePageController());
-  final gpsController = Get.find<GpsScreenController>();
 
   late final TabController _tabController = TabController(
     length: 2,
@@ -43,7 +41,7 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
                     child: TabBar(
                       controller: _tabController,
                       onTap: (value) {
-                        gpsController.canSave.value = false;
+                        createPageController.claerValue();
                       },
                       indicatorSize: TabBarIndicatorSize.tab,
                       dividerColor: Colors.transparent,

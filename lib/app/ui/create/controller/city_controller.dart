@@ -27,7 +27,7 @@ class CityController extends GetxController {
       city.value = result;
       log('[loadCity]: succeed');
     } catch (e) {
-      log("Error: $e");
+      log("[loadCity]: $e");
     }
   }
 }
