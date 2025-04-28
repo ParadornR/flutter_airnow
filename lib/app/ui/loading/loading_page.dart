@@ -14,9 +14,12 @@ class LoadingPage extends StatelessWidget {
       child: Center(
         child: Obx(() {
           // ignore: unnecessary_null_comparison
-          if (loadingController.isLogin.value == null) {
+          if (loadingController.hasInternet.value == false) {
             // ระหว่างรอการตรวจสอบสถานะล็อกอิน
-            return Center(child: CircularProgressIndicator());
+            return Scaffold(body: Center(child: Text("No Internet")));
+          } else if (loadingController.isLogin.value == null) {
+            // ระหว่างรอการตรวจสอบสถานะล็อกอิน
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
           } else if (loadingController.isLogin.value == false) {
             // ถ้าไม่ได้ล็อกอิน
             return LoginPage();

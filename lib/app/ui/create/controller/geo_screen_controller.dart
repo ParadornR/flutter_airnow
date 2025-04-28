@@ -148,6 +148,7 @@ class GeoScreenController extends GetxController {
             'ts': weather.ts,
             'created_at': DateTime.now(),
           });
+          Get.back(closeOverlays: true);
           Get.snackbar(
             'Location Data Saved',
             "Your location data has been successfully recorded.",
@@ -157,7 +158,8 @@ class GeoScreenController extends GetxController {
           );
           canSave.value = true;
           await userController.fetchAllCardLocationData();
-          Get.offAll(() => HomePage());
+          // Get.back(closeOverlays: true);
+          // Get.offAll(() => HomePage());
         } else {
           Get.snackbar(
             'Location Data Already Exists',

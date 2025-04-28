@@ -149,6 +149,7 @@ class GpsScreenController extends GetxController {
           'ts': weather.ts,
           'created_at': DateTime.now(),
         });
+        Get.back(closeOverlays: true);
         Get.snackbar(
           'Location Data Saved',
           "Your location data has been successfully recorded.",
@@ -158,7 +159,8 @@ class GpsScreenController extends GetxController {
         );
         log("[saveData]: succeed");
         await userController.fetchAllCardLocationData();
-        Get.offAll(() => HomePage());
+        // Get.back(closeOverlays: true);
+        // Get.offAll(() => HomePage());
       } else {
         log('มีข้อมูล location นี้แล้ว');
         Get.snackbar(

@@ -87,6 +87,7 @@ class UserController extends GetxController {
             .collection('location')
             .doc(city)
             .delete();
+        Get.back(closeOverlays: true);
         Get.snackbar(
           'Success',
           "The item has been successfully deleted.",
@@ -95,7 +96,7 @@ class UserController extends GetxController {
           colorText: Colors.white,
         );
         // กลับไปที่หน้าก่อน
-        Get.offAll(() => HomePage());
+        // Get.offAll(() => HomePage());
         log(
           'Successfully deleted weather, pollution documents and the city document.',
         );
