@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_airnow/app/ui/loading/loading_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 
 class HomeScreenController extends GetxController {
   final userController = Get.find<UserController>();
+  final loadingController = Get.find<LoadingController>();
 
   var selectedIndex = Rx<int?>(null);
 

@@ -16,7 +16,18 @@ class LoadingPage extends StatelessWidget {
           // ignore: unnecessary_null_comparison
           if (loadingController.hasInternet.value == false) {
             // ระหว่างรอการตรวจสอบสถานะล็อกอิน
-            return Scaffold(body: Center(child: Text("No Internet")));
+            return Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 8),
+                    Text("No Internet"),
+                  ],
+                ),
+              ),
+            );
           } else if (loadingController.isLogin.value == null) {
             // ระหว่างรอการตรวจสอบสถานะล็อกอิน
             return Scaffold(body: Center(child: CircularProgressIndicator()));
