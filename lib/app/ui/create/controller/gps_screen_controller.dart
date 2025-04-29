@@ -6,7 +6,6 @@ import 'package:flutter_airnow/app/data/models/city_data_model.dart';
 import 'package:flutter_airnow/app/ui/home/controller/user_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
-import 'package:flutter_airnow/app/ui/home/home_page.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart' as osm;
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';

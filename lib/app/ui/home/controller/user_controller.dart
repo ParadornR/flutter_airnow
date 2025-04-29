@@ -5,7 +5,6 @@ import 'package:flutter_airnow/app/data/models/city_data_model.dart';
 import 'package:flutter_airnow/app/data/models/user_model.dart';
 import 'package:flutter_airnow/app/data/providers/city_data_provider.dart';
 import 'package:flutter_airnow/app/data/repositories/city_data_repository.dart';
-import 'package:flutter_airnow/app/ui/home/home_page.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

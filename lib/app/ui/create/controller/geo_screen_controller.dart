@@ -6,7 +6,6 @@ import 'package:flutter_airnow/app/ui/create/controller/city_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/city_data_controller.dart';
 import 'package:flutter_airnow/app/ui/create/controller/state_controller.dart';
 import 'package:flutter_airnow/app/ui/home/controller/home_screen_controller.dart';
-import 'package:flutter_airnow/app/ui/home/home_page.dart';
 import 'package:get/get.dart';
 
 class GeoScreenController extends GetxController {
