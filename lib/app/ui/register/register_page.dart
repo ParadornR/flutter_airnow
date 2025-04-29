@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_airnow/app/ui/registor/register_controller.dart';
+import 'package:flutter_airnow/app/ui/register/register_controller.dart';
 import 'package:flutter_airnow/app/ui/widget/custom_text.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
