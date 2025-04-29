@@ -70,6 +70,28 @@ lib/
     │
     └── main.dart            # จุดเริ่มต้นของแอป
 ```
+## ตัวอย่างหน้าจอแอป (App Preview)
+
+### 🔐 หน้าล็อกอิน | 📝 สมัครสมาชิก 
+
+<p float="left">
+  <img src="assets/gif/Login.gif" alt="Login Page" width="300"/>
+  <img src="assets/gif/Regis.gif" alt="Register Page" width="300"/>
+</p>
+
+### 🏠 หน้าหลัก | 📄 หน้ารายละเอียด 
+
+<p float="left">
+  <img src="assets/gif/Home.gif" alt="Home Page" width="300"/>
+  <img src="assets/gif/Detail.gif" alt="Detail Page" width="300"/>
+</p>
+
+### 📍 สร้างข้อมูลด้วยการระบุสถานที่ หรือ GPS ในการระบุตำแหน่ง
+
+<p float="left">
+  <img src="assets/gif/Geo.gif" alt="Geo Page" width="300"/>
+  <img src="assets/gif/Gps.gif" alt="GPS Page" width="300"/>
+</p>
 
 ## เครดิต (Credits)
 ข้อมูล AQI และ Polution จาก [IQAir AirVisual API](https://api-docs.iqair.com/?version=latest#intro)
