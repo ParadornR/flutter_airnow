@@ -1,10 +1,8 @@
 import 'dart:developer';
-
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class CityDataApiService extends GetConnect {
-  final String apiKey = dotenv.env['API_KEY'] ?? "default_api_key"; 
+  final String apiKey = "a4547916-d95f-4d43-b0ef-3bcdc2bf1011";
   Future<Response> fetchCityDataWithCityStateCountry(
     String city,
     String state,
@@ -70,4 +68,4 @@ class CityDataApiService extends GetConnect {
 //       isLoading.value = false;
 //     }
 //   }
-// }  
+// }

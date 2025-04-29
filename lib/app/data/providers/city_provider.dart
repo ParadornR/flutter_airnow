@@ -1,10 +1,7 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class CityApiService extends GetConnect {
-  final String apiKey =
-      dotenv.env['API_KEY'] ??
-      "default_api_key"; // ใช้ default value เมื่อไม่ได้ตั้งค่า
+  final String apiKey = "a4547916-d95f-4d43-b0ef-3bcdc2bf1011";
   Future<Response> fetchCity(String state, String country) {
     final url =
         "http://api.airvisual.com/v2/cities?state=$state&country=$country&key=$apiKey";
